@@ -13,7 +13,8 @@ import UploadImages from 'components/UploadImage';
 import useForm from './useForm';
 
 const LibraryForm = () => {
-  const { form, onFinish, Fields, yupSync, isLoading, onChange } = useForm();
+  const { form, onFinish, Fields, yupSync, isLoading, onChange, isAdd } =
+    useForm();
 
   return (
     <StyledForm
@@ -23,7 +24,7 @@ const LibraryForm = () => {
       autoComplete="off"
     >
       <Wrapper>
-        <UploadImages onChange={onChange} />
+        <UploadImages onChange={onChange} isAdd={isAdd} />
 
         <Box>
           <FormItem

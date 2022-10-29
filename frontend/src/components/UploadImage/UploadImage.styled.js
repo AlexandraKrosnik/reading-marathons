@@ -20,4 +20,7 @@ export const UploadImg = styled(Upload)`
   .ant-upload-list-picture-card .ant-upload-list-item {
     border: none;
   }
+  .reactEasyCrop_CropArea {
+    height: 100%;
+  }
 `;

@@ -33,15 +33,6 @@ export default function App() {
     firstRenderEnded && (
       <>
         <GlobalStyle />
-        {/* <EmtpyLibraryText />
-        <ProgressChart />
-        <MyGoal />
-        <CongratsModal />
-        <WellDoneModal />
-        <RatingModal/>
-        <ExitModal />
-        <YearTimer />
-        <GoalTimer /> */}
 
         <Routes>
           <Route path="/" element={<SharedLayout />}>

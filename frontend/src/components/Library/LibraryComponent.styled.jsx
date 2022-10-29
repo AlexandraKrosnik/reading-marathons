@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Tabs } from 'antd';
 import styled from 'styled-components';
 
 export const StyledSection = styled.section`
@@ -12,13 +12,20 @@ export const StyledButton = styled(Button)`
   min-height: 40px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 35px;
 
   font-weight: 600;
   font-size: 16px;
   line-height: 1.25;
-
-  @media (min-width: ${p => p.theme.breakpoints.mobile}) {
-    margin-bottom: 128px;
+`;
+export const StyledTabs = styled(Tabs)`
+  @media (max-width: ${p => p.theme.breakpoints.tablet}) {
+    .ant-tabs-tab {
+      font-size: 11px;
+    }
+    .ant-tabs-tab + .ant-tabs-tab {
+      margin: 0 0 0 23px;
+    }
   }
 `;
 
@@ -49,9 +56,11 @@ export const TextStyledPrimary = styled.p`
 
 export const TextStyled = styled.span`
   font-family: 'Montserrat';
+  display: inline-block;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
+  margin-bottom: 20px;
 
   color: ${p => p.theme.colors.secondaryFontColor};
 `;

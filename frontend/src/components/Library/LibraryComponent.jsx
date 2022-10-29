@@ -1,7 +1,7 @@
 import LibraryForm from './LibraryForm/LibraryForm';
-import MobileTable from './MobileTable/MobileTable';
-import Table from './Table/Table';
-import ReadTable from './ReadTable/ReadTable';
+
+// import Table from './Table/Table';
+// import ReadTable from './ReadTable/ReadTable';
 import Container from 'components/Container';
 import {
   MobileAddBtn,
@@ -9,22 +9,25 @@ import {
   StyledSection,
   TextStyled,
   TextStyledPrimary,
+  StyledTabs,
 } from './LibraryComponent.styled';
 import useLibraryComponent from './useLibraryComponent';
 import { ReactComponent as PlusIcon } from './assets/plus.svg';
 import EmtpyLibraryText from 'components/modals/EmtpyLibraryText';
+import { Empty, Collapse } from 'antd';
 
 const LibraryComponent = () => {
   const {
     isMobile,
-    alreadyBooks,
-    nowBooks,
-    planBooks,
     navigate,
     isEmpty,
     isLoading,
     error,
+    items,
+    defaultTabKey,
+    onTabChange,
   } = useLibraryComponent();
+  const { Panel } = Collapse;
 
   return (
     <>
@@ -34,30 +37,20 @@ const LibraryComponent = () => {
           <StyledSection>
             {isMobile ? (
               <>
-                {!isEmpty && (
+                {!isEmpty ? (
                   <>
                     <TextStyledPrimary>Бібліотека пуста.</TextStyledPrimary>
                     <TextStyled>Додайте книжки до бібліотеки.</TextStyled>
+                    <Empty />
                   </>
+                ) : (
+                  <StyledTabs
+                    defaultActiveKey={defaultTabKey}
+                    onChange={onTabChange}
+                    items={items}
+                  />
                 )}
 
-                {!!alreadyBooks.length && (
-                  <MobileTable
-                    title={'Прочитано'}
-                    status={false}
-                    data={alreadyBooks}
-                  />
-                )}
-                {!!nowBooks.length && (
-                  <MobileTable title={'Читаю'} status={true} data={nowBooks} />
-                )}
-                {!!planBooks.length && (
-                  <MobileTable
-                    title={'Маю намір прочитати'}
-                    status={false}
-                    data={planBooks}
-                  />
-                )}
                 <MobileAddBtn
                   type="primary"
                   onClick={() => {
@@ -69,37 +62,23 @@ const LibraryComponent = () => {
               </>
             ) : (
               <>
-                <LibraryForm />
-                {!!alreadyBooks.length && (
-                  <ReadTable
-                    title={'Прочитано'}
-                    status={false}
-                    data={alreadyBooks}
-                  />
-                )}
-                <EmtpyLibraryText isEmptyLibrary={isEmpty} />
-                {!!nowBooks.length && (
-                  <Table title={'Читаю'} status={true} data={nowBooks} />
-                )}
-                {!!planBooks.length && (
-                  <Table
-                    title={'Маю намір прочитати'}
-                    status={false}
-                    data={planBooks}
-                  />
+                <Collapse>
+                  <Panel header="Додати книгу" key="1">
+                    <LibraryForm />
+                  </Panel>
+                </Collapse>
+                {!isEmpty ? (
+                  <EmtpyLibraryText />
+                ) : (
+                  defaultTabKey && (
+                    <StyledTabs
+                      defaultActiveKey={defaultTabKey}
+                      onChange={onTabChange}
+                      items={items}
+                    />
+                  )
                 )}
               </>
-            )}
-
-            {isEmpty && (
-              <StyledButton
-                type="primary"
-                onClick={() => {
-                  navigate('/training');
-                }}
-              >
-                Моє тренування
-              </StyledButton>
             )}
           </StyledSection>
         )}

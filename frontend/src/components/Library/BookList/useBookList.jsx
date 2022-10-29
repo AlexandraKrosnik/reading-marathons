@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useMobileTable = () => {
+const useBookList = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bookId, setBookId] = useState(null);
   const toggleModal = useCallback(
@@ -16,4 +16,4 @@ const useMobileTable = () => {
   return { setBookId, toggleModal, isModalVisible, onModalClose, bookId };
 };
 
-export default useMobileTable;
+export default useBookList;

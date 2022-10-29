@@ -133,12 +133,12 @@ export const StyledForm = styled(Form)`
   margin: 0 auto; */
 
   @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    margin-bottom: 40px;
+    /* margin-bottom: 20px; */
   }
 
   @media (min-width: ${p => p.theme.breakpoints.desktop}) {
     width: fit-content;
     margin: 0 auto;
-    margin-bottom: 80px;
+    /* margin-bottom: 40px; */
   }
 `;

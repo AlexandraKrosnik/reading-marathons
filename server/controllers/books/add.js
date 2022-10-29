@@ -2,8 +2,8 @@ const { BadRequest } = require("http-errors");
 const { Book } = require("../../models");
 const { cloudinary } = require("../../utils/cloudinary");
 const defaultImage = {
-  url: "http://res.cloudinary.com/doyhk2dhe/image/upload/v1666186672/book_images/zl7bntuvwd1z91ffr8ih.png",
-  public_id: "book_images/zl7bntuvwd1z91ffr8ih",
+  url: "https://res.cloudinary.com/doyhk2dhe/image/upload/v1666952965/book_images/op4rzewwc3oe27kchpxj.png",
+  public_id: "book_images/op4rzewwc3oe27kchpxj",
 };
 
 const add = async (req, res) => {

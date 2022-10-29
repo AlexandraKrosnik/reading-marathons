@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { StyledBtn } from '../ReadTable/ReadTable.styled';
-import { Progress, Badge } from 'antd';
+
+import { Progress, Badge, Button } from 'antd';
 
 export const StyledTitle = styled.h3`
   font-family: 'Montserrat';
@@ -11,35 +11,44 @@ export const StyledTitle = styled.h3`
   margin-bottom: 20px;
 `;
 
-export const StyledList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
 export const StyledItem = styled.li`
   background-color: ${p => p.theme.colors.white};
   box-shadow: ${p => p.theme.shadows.header};
+  border-radius: 5px;
 
   color: ${p => p.theme.colors.mainFontColor};
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 320px;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    width: 280px;
+  }
 `;
 
 export const StyledBadge = styled(Badge)`
   display: flex;
 
-  padding: 20px 10px 10px 2px;
+  padding: 20px 10px 15px 8px;
 `;
 
 export const StyledIconBox = styled.div`
   margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 export const StyledAuthBox = styled.div`
-  padding-left: 10px;
+  /* padding-left: 10px; */
 `;
 
 export const StyledImage = styled.img`
   max-width: 90px;
+  height: 110px;
   margin-bottom: 10px;
+  border-radius: 5px;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    max-width: 110px;
+  }
 `;
 export const StyledAuthText = styled.p`
   font-size: 10px;
@@ -48,6 +57,7 @@ export const StyledAuthText = styled.p`
 
 export const StyledBookTitle = styled.h3`
   font-family: 'Montserrat';
+  /* display: inline; */
   font-weight: 800;
   font-size: 12px;
   line-height: 1.25;
@@ -56,8 +66,14 @@ export const StyledBookTitle = styled.h3`
 `;
 
 export const StyledProgress = styled(Progress)`
-  width: 100%;
-  /* margin-top: 20px; */
+  .ant-progress-outer {
+    padding-right: calc(2em);
+  }
+  .ant-progress-text {
+    width: auto;
+    font-size: 12px;
+    margin-left: 16px;
+  }
 `;
 export const StyledLS = styled.div`
   width: 100%;
@@ -73,7 +89,7 @@ export const StyledLSTop = styled.div`
 
 export const Box = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-top;
 
   :not(:last-child) {
     margin-bottom: 7px;
@@ -89,19 +105,28 @@ export const StyledText = styled.p`
 
 export const PropertyName = styled(StyledText)`
   color: ${p => p.theme.colors.secondaryFontColor};
-  width: 60px;
+  width: 45px;
+  margin-right: 15px;
 `;
-
-export const StyledButton = styled(StyledBtn)`
+export const StyledButton = styled(Button)`
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  min-height: 40px;
   min-width: 127px;
-  margin-left: 18px;
-
+  border: none;
+  border-radius: 0;
   color: ${p => p.theme.colors.white};
-`;
-
-export const Wrapper = styled.div`
-  :not(:last-child) {
-    margin-bottom: 20px;
+  background-color: ${p => p.theme.colors.btnBackground};
+  box-shadow: ${p => p.theme.shadows.instrustion};
+  margin-left: 18px;
+  :hover,
+  :focus {
+    background-color: ${p => p.theme.colors.secondaryFontColor};
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    min-width: 130px;
   }
 `;
 
@@ -110,7 +135,6 @@ export const StyledRating = styled.div`
   align-items: center;
   justify-content: end;
   padding-right: 10px;
-  padding-bottom: 5px;
   .anticon[tabindex] {
     height: fit-content;
     margin-left: 10px;

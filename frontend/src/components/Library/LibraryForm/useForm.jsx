@@ -1,9 +1,13 @@
 import { Form, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAddBookMutation } from 'redux/RTKQuery/booksApi';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const Fields = {
+  image: {
+    name: 'image',
+  },
   title: {
     name: 'title',
     label: 'Назва книги',
@@ -25,11 +29,20 @@ const Fields = {
 const useForm = () => {
   const [addBook, { isLoading }] = useAddBookMutation();
   const [selectedFile, setSelectedFile] = useState();
+  const [isAdd, setIsAdd] = useState(false);
+  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
   const date = new Date();
   const year = date.getFullYear();
+  useEffect(() => {
+    if (isAdd) {
+      setTimeout(() => {
+        setIsAdd(false);
+      }, 500);
+    }
+  }, [isAdd]);
 
   let schema = yup.object().shape({
     title: yup
@@ -48,6 +61,7 @@ const useForm = () => {
       .required("Обов'язкове поле")
       .max(9999, 'Кількість сторінок може бути меншою або рівною 9999')
       .positive('Поле може містити тільки додатні числа'),
+    image: yup.mixed(),
   });
 
   const yupSync = {
@@ -70,31 +84,32 @@ const useForm = () => {
 
   const onFinish = async values => {
     if (values.title[0] === '-') {
-      console.log(values.title[0]);
       return message.error('Поле "Назва книги" не може починатись з дефісу');
     }
 
     if (values.title[0] === ' ') {
-      console.log(values.title[0]);
       return message.error('Поле "Назва книги" не може починатись з пробілу');
     }
-    console.log(selectedFile);
+
     const data = {
       ...values,
       image: !!selectedFile ? selectedFile.url : '',
     };
-    console.log(data);
+
     const result = await addBook(data);
 
     if ('error' in result) {
       message.error(result.error.data.message);
     } else {
       message.success('Книгу успішно додано!');
+      setIsAdd(true);
       form.resetFields();
+
+      navigate('/library');
     }
   };
 
-  return { form, onFinish, Fields, yupSync, isLoading, onChange };
+  return { form, onFinish, Fields, yupSync, isLoading, onChange, isAdd };
 };
 
 export default useForm;
