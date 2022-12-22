@@ -17,8 +17,6 @@ import {
   StyledRating,
   StyledLSTop,
 } from './BookItem.styled';
-import useBookList from '../useBookList';
-import useBookDrawer from 'components/Library/BookDrawer/useBookDrawer';
 import BookDrawer from 'components/Library/BookDrawer';
 import useBookItem from './useBookItem';
 
@@ -34,27 +32,18 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
     publication,
     rating,
   } = item;
-  const {
-    openDrawer,
-    showDrawer,
-    onCloseDrawer,
-    setBookId: drawerId,
-    bookId,
-  } = useBookItem();
+  const { openDrawer, showDrawer, onCloseDrawer } = useBookItem();
 
   const progress = Math.floor((leftPages * 100) / pages);
   return (
     <>
-      <StyledItem
-        key={_id}
-        onClick={() => {
-          // drawerId(_id);
-          // console.log(bookId);
-          showDrawer(_id);
-        }}
-      >
+      <StyledItem key={_id}>
         <StyledBadge count={readTimes} showZero>
-          <StyledIconBox>
+          <StyledIconBox
+            onClick={() => {
+              showDrawer(_id);
+            }}
+          >
             <StyledImage src={image?.url} alt="book" />
             <StyledAuthBox>
               <StyledProgress percent={progress} />
@@ -62,7 +51,11 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
           </StyledIconBox>
           <StyledLS>
             <StyledLSTop>
-              <StyledBookTitle>
+              <StyledBookTitle
+                onClick={() => {
+                  showDrawer(_id);
+                }}
+              >
                 <EllipsisText text={title} length={50} />
               </StyledBookTitle>
 

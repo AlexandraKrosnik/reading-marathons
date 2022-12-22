@@ -14,8 +14,8 @@ const useLibraryComponent = () => {
   const [nowBooks, setNowBooks] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
   const [defaultTabKey, setDefaultTabKey] = useState();
-
   const { data, error, isLoading } = useGetBooksQuery();
+
   const tab = searchParams.get('tab');
   const params = useMemo(() => {
     return ['plan', 'now', 'already'];
@@ -38,11 +38,11 @@ const useLibraryComponent = () => {
           now.push(item);
         }
       });
-
       setPlanBooks(plan);
       setAlreadyBooks(already);
       setNowBooks(now);
       setIsEmpty(!!plan.length || !!already.length || !!now.length);
+
       if (params.includes(tab)) {
         setDefaultTabKey(tab);
       } else {

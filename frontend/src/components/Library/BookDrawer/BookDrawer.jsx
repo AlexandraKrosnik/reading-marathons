@@ -1,4 +1,5 @@
-import { Descriptions } from 'antd';
+import { Descriptions, Rate } from 'antd';
+
 import PropTypes from 'prop-types';
 import useBookDrawer from './useBookDrawer';
 import {
@@ -30,6 +31,7 @@ const BookDrawer = ({ onClose, open }) => {
       {isLoading && <SpinStyled size="large" />}
       {book && (
         <>
+          {/* <FloatButton onClick={() => console.log('click')} /> */}
           <HeaderStyled>
             <HeadStyled>
               <DrawerImgStyled src={book.image?.url} alt={book.title} />
@@ -66,7 +68,7 @@ const BookDrawer = ({ onClose, open }) => {
               <Descriptions.Item
                 label={<DescriptionsItemLabel>Статус</DescriptionsItemLabel>}
               >
-                <DescriptionsItemContent>
+                <DescriptionsItemContent data-status={book.status}>
                   {book.status === 'plan' && 'Планую прочитати'}
                   {book.status === 'already' && 'Прочитано'}
                   {book.status === 'now' && 'Читаю зараз'}
@@ -85,6 +87,19 @@ const BookDrawer = ({ onClose, open }) => {
               </Descriptions.Item>
               {book.rating && (
                 <>
+                  <Descriptions.Item
+                    label={
+                      <DescriptionsItemLabel>Оцінка</DescriptionsItemLabel>
+                    }
+                  >
+                    <DescriptionsItemContent>
+                      <Rate
+                        style={{ width: '120px', fontSize: '17px' }}
+                        disabled
+                        value={book.rating}
+                      />
+                    </DescriptionsItemContent>
+                  </Descriptions.Item>
                   <Descriptions.Item
                     label={
                       <DescriptionsItemLabel>Відгук</DescriptionsItemLabel>

@@ -58,7 +58,7 @@ const RatingModal = ({ onClose, bookId }) => {
                       onChange={e => {
                         setResume(e.currentTarget.value);
                       }}
-                      autoSize={{ minRows: 7 }}
+                      autoSize={{ maxRows: 7 }}
                     />
                   </StyledRatingLabel>
                 </FormItem>

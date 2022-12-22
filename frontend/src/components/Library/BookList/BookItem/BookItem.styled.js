@@ -46,6 +46,7 @@ export const StyledImage = styled.img`
   height: 110px;
   margin-bottom: 10px;
   border-radius: 5px;
+  cursor: pointer;
   @media (min-width: ${p => p.theme.breakpoints.tablet}) {
     max-width: 110px;
   }
@@ -61,11 +62,12 @@ export const StyledBookTitle = styled.h3`
   font-weight: 800;
   font-size: 12px;
   line-height: 1.25;
-
+  cursor: pointer;
   margin-bottom: 7px;
 `;
 
 export const StyledProgress = styled(Progress)`
+  cursor: default;
   .ant-progress-outer {
     padding-right: calc(2em);
   }
@@ -86,11 +88,10 @@ export const StyledLSTop = styled.div`
   padding-top: 10px;
   margin-bottom: 10px;
 `;
-
 export const Box = styled.div`
   display: flex;
   align-items: flex-top;
-
+  cursor: default;
   :not(:last-child) {
     margin-bottom: 7px;
   }

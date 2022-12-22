@@ -1,4 +1,4 @@
-import { Button, Tabs } from 'antd';
+import { Button, Tabs, Collapse } from 'antd';
 import styled from 'styled-components';
 
 export const StyledSection = styled.section`
@@ -63,4 +63,13 @@ export const TextStyled = styled.span`
   margin-bottom: 20px;
 
   color: ${p => p.theme.colors.secondaryFontColor};
+`;
+
+export const CollapseStyled = styled(Collapse)`
+  border: none;
+  background-color: inherit;
+  .ant-collapse-item:last-child > .ant-collapse-content {
+    background-color: inherit;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  }
 `;

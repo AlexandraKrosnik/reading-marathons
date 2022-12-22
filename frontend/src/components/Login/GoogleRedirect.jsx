@@ -10,6 +10,7 @@ const GoogleRedirect = () => {
   const token = searchParams.get('token');
   const name = searchParams.get('name');
   const email = searchParams.get('email');
+  console.log('GoogleRedirect: ' + searchParams.get('token'));
   dispatch(
     booksApi.util.invalidateTags([
       { type: 'Books' },

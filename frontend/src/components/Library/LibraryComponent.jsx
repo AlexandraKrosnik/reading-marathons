@@ -10,6 +10,7 @@ import {
   TextStyled,
   TextStyledPrimary,
   StyledTabs,
+  CollapseStyled,
 } from './LibraryComponent.styled';
 import useLibraryComponent from './useLibraryComponent';
 import { ReactComponent as PlusIcon } from './assets/plus.svg';
@@ -28,7 +29,6 @@ const LibraryComponent = () => {
     onTabChange,
   } = useLibraryComponent();
   const { Panel } = Collapse;
-
   return (
     <>
       <Container>
@@ -37,7 +37,7 @@ const LibraryComponent = () => {
           <StyledSection>
             {isMobile ? (
               <>
-                {!isEmpty ? (
+                {!isEmpty && defaultTabKey ? (
                   <>
                     <TextStyledPrimary>Бібліотека пуста.</TextStyledPrimary>
                     <TextStyled>Додайте книжки до бібліотеки.</TextStyled>
@@ -45,7 +45,7 @@ const LibraryComponent = () => {
                   </>
                 ) : (
                   <StyledTabs
-                    defaultActiveKey={defaultTabKey}
+                    activeKey={defaultTabKey}
                     onChange={onTabChange}
                     items={items}
                   />
@@ -62,11 +62,11 @@ const LibraryComponent = () => {
               </>
             ) : (
               <>
-                <Collapse>
+                <CollapseStyled>
                   <Panel header="Додати книгу" key="1">
                     <LibraryForm />
                   </Panel>
-                </Collapse>
+                </CollapseStyled>
                 {!isEmpty ? (
                   <EmtpyLibraryText />
                 ) : (

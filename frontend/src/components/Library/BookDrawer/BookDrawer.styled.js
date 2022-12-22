@@ -14,6 +14,9 @@ export const DrawerStyled = styled(Drawer)`
     padding: 0;
     /* overflow-y: hidden; */
   }
+  .ant-drawer-body::-webkit-scrollbar {
+    display: none;
+  }
   .ant-drawer-content {
     /* position: relative; */
   }
@@ -52,6 +55,10 @@ export const HeadStyled = styled.div`
   border-top-left-radius: 20px;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   z-index: 2;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 500px;
+    border-top-right-radius: 0px;
+  }
 `;
 export const MiddleStyled = styled.div`
   width: 100%;
@@ -67,10 +74,9 @@ export const MiddleStyled = styled.div`
 export const BodyStyled = styled.div`
   width: 325px;
   margin: 0 auto;
-  overflow-y: scroll;
   padding-top: 200px;
   .ant-descriptions-item-container {
-    align-items: flex-end;
+    align-items: baseline;
   }
 `;
 
@@ -79,13 +85,15 @@ export const DrawerImgStyled = styled.img`
   height: 150px;
   width: auto;
   border-radius: 5px;
-
   top: 10px;
   left: 50%;
   transform: translate(-50%, 10px);
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
     rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    top: 20px;
+  }
 `;
 
 export const TitleStyled = styled.h2`
@@ -101,6 +109,17 @@ export const DescriptionsItemContent = styled.span`
   background-color: #e9e9e999;
   padding: 3px 5px;
   border-radius: 10px;
+  font-weight: 500;
+  margin-left: 10px;
+  &[data-status='now'] {
+    background-color: #a4edb678;
+  }
+  &[data-status='plan'] {
+    background-color: #fff9034f;
+  }
+  &[data-status='already'] {
+    background-color: #ef8b8b78;
+  }
 `;
 export const DescriptionsStyled = styled(Descriptions)`
   /* background-color: red; */
