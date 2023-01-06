@@ -1,14 +1,11 @@
 const { BadRequest } = require("http-errors");
 const { Book } = require("../../models");
 const { cloudinary } = require("../../utils/cloudinary");
-const defaultImage = {
-  url: "https://res.cloudinary.com/doyhk2dhe/image/upload/v1666952965/book_images/op4rzewwc3oe27kchpxj.png",
-  public_id: "book_images/op4rzewwc3oe27kchpxj",
-};
+const defaultImage = require("../../utils/defaultBookCover");
 
 const add = async (req, res) => {
   const { id } = req.user;
-  // console.log(req.body);
+
   const { title, author, image } = req.body;
 
   const bookAdded = await Book.findOne({ title, author, user: id });

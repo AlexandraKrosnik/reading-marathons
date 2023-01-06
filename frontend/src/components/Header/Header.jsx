@@ -20,9 +20,11 @@ import { useMatchMedia } from 'hooks';
 import Modal from 'components/modals/Modal/Modal';
 import ExitModal from 'components/modals/ExitModal';
 import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isMobile } = useMatchMedia();
@@ -31,6 +33,7 @@ const Header = () => {
 
   const userName = useSelector(getUserName) || '';
   const firstLetter = userName[0];
+  const tab = searchParams.get('tab');
 
   const toggleModal = () => setIsModalVisible(!isModalVisible);
   const handleLogOut = () => {
@@ -49,7 +52,7 @@ const Header = () => {
                 <Logo to="/library">BR</Logo>
                 {isLoggedIn && (
                   <FlexWrapper>
-                    <StyledLink to="/library">
+                    <StyledLink to="/library?tab=plan">
                       <MdOutlineHome size={20} />
                     </StyledLink>
                     <StatsLink to="/training">
@@ -72,7 +75,7 @@ const Header = () => {
                       <UserName>{userName}</UserName>
                     </FlexWrapper>
                     <FlexWrapper>
-                      <StyledLink to="/library">
+                      <StyledLink to="/library?tab=plan">
                         <MdOutlineHome size={20} />
                       </StyledLink>
                       <StatsLink to="/training">

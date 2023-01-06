@@ -1,6 +1,6 @@
 import { Descriptions, Rate } from 'antd';
+import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-import PropTypes from 'prop-types';
 import useBookDrawer from './useBookDrawer';
 import {
   SpinStyled,
@@ -11,27 +11,54 @@ import {
   BodyStyled,
   HeaderStyled,
   MiddleStyled,
-  DescriptionsStyled,
-  DescriptionsItemStyled,
+  DescriptionsStyled,  
   DescriptionsItemLabel,
   DescriptionsItemContent,
+  SpaceStyled,
+  DropdownStyled,
+  ButtonItemsStyled,
 } from './BookDrawer.styled';
-import Rating from 'react-rating';
-const BookDrawer = ({ onClose, open }) => {
-  const { data, isLoading, isMobile } = useBookDrawer(open);
+
+const BookDrawer = () => {
+  const { data, isLoading, isMobile, deleteBookById, isOpen, onCloseDrawer } =
+    useBookDrawer();
   const book = data?.book;
+  const items = [
+    {
+      key: 'delete',
+      icon: (
+        <ButtonItemsStyled
+          shape="circle"
+          type="ghost"
+          icon={<DeleteOutlined style={{ fontSize: '20px' }} />}
+          onClick={deleteBookById}
+        ></ButtonItemsStyled>
+      ),
+    },
+    {
+      key: 'change',
+      icon: (
+        <ButtonItemsStyled
+          shape="circle"
+          type="ghost"
+          icon={<EditOutlined style={{ fontSize: '20px' }} />}
+          // onClick={}
+        ></ButtonItemsStyled>
+      ),
+    },
+  ];
+
   return (
     <DrawerStyled
       placement={!isMobile ? 'right' : 'bottom'}
-      onClose={onClose}
-      open={open}
+      onClose={onCloseDrawer}
+      open={isOpen}
       closable={false}
       width={!isMobile && '500px'}
     >
       {isLoading && <SpinStyled size="large" />}
       {book && (
         <>
-          {/* <FloatButton onClick={() => console.log('click')} /> */}
           <HeaderStyled>
             <HeadStyled>
               <DrawerImgStyled src={book.image?.url} alt={book.title} />
@@ -112,16 +139,26 @@ const BookDrawer = ({ onClose, open }) => {
                 </>
               )}
             </DescriptionsStyled>
+            <SpaceStyled>
+              <DropdownStyled
+                menu={{
+                  items,
+                }}
+                placement="top"
+                getPopupContainer={trigger => trigger.parentElement}
+              >
+                <ButtonItemsStyled
+                  shape="circle"
+                  type="ghost"
+                  icon={<MoreOutlined style={{ fontSize: '21px' }} />}
+                ></ButtonItemsStyled>
+              </DropdownStyled>
+            </SpaceStyled>
           </BodyStyled>
         </>
       )}
     </DrawerStyled>
   );
-};
-
-BookDrawer.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
 };
 
 export default BookDrawer;

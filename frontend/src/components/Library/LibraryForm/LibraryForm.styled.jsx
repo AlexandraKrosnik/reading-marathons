@@ -1,6 +1,25 @@
 import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
 
+export const StyledForm = styled(Form)`
+  font-family: 'Montserrat';
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto; */
+
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    /* margin-bottom: 20px; */
+  }
+
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    width: fit-content;
+    margin: 0 auto;
+    /* margin-bottom: 40px; */
+  }
+`;
+
 export const FormItem = styled(Form.Item)`
   margin-bottom: 0;
   flex: 1;
@@ -27,14 +46,6 @@ export const FormItem = styled(Form.Item)`
       width: 400px;
     }
   }
-  /* @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    :nth-child(3) {
-      width: 152px;
-    }
-    :nth-child(4) {
-      width: 152px;
-    }
-  } */
 `;
 
 export const StyledInput = styled(Input)`
@@ -122,23 +133,5 @@ export const Box = styled.div`
     display: flex;
     flex-wrap: wrap;
     width: 830px;
-  }
-`;
-
-export const StyledForm = styled(Form)`
-  font-family: 'Montserrat';
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto; */
-
-  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    /* margin-bottom: 20px; */
-  }
-
-  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
-    width: fit-content;
-    margin: 0 auto;
-    /* margin-bottom: 40px; */
   }
 `;

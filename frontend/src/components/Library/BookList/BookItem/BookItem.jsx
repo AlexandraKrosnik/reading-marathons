@@ -32,7 +32,7 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
     publication,
     rating,
   } = item;
-  const { openDrawer, showDrawer, onCloseDrawer } = useBookItem();
+  const { showDrawer } = useBookItem();
 
   const progress = Math.floor((leftPages * 100) / pages);
   return (
@@ -91,7 +91,6 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
           </StyledLS>
         </StyledBadge>
       </StyledItem>
-      <BookDrawer onClose={onCloseDrawer} open={openDrawer} />
     </>
   );
 };

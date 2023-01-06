@@ -3,20 +3,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from 'redux/RTKQuery/booksApi';
 import BookList from './BookList/BookList';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 const useLibraryComponent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isMobile } = useMatchMedia();
   const navigate = useNavigate();
+  const { search } = useLocation();
   const [planBooks, setPlanBooks] = useState([]);
   const [alreadyBooks, setAlreadyBooks] = useState([]);
   const [nowBooks, setNowBooks] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
   const [defaultTabKey, setDefaultTabKey] = useState();
   const { data, error, isLoading } = useGetBooksQuery();
-
   const tab = searchParams.get('tab');
+
   const params = useMemo(() => {
     return ['plan', 'now', 'already'];
   }, []);
@@ -42,21 +43,17 @@ const useLibraryComponent = () => {
       setAlreadyBooks(already);
       setNowBooks(now);
       setIsEmpty(!!plan.length || !!already.length || !!now.length);
-
-      if (params.includes(tab)) {
-        setDefaultTabKey(tab);
-      } else {
-        setDefaultTabKey(params[0]);
-      }
     }
-  }, [data, tab, setSearchParams, params]);
+  }, [data]);
 
   useEffect(() => {
-    if (defaultTabKey) {
-      searchParams.set('tab', defaultTabKey);
+    if (!tab) {
+      searchParams.set('tab', params[0]);
       setSearchParams(searchParams);
+    } else if (tab && params.includes(tab)) {
+      setDefaultTabKey(tab);
     }
-  }, [defaultTabKey, setSearchParams, searchParams]);
+  }, [tab, params, setSearchParams, searchParams]);
 
   const items = useMemo(() => {
     return [
@@ -83,6 +80,8 @@ const useLibraryComponent = () => {
 
   const onTabChange = key => {
     setDefaultTabKey(key);
+    searchParams.set('tab', key);
+    setSearchParams(searchParams);
   };
 
   return {
@@ -97,6 +96,7 @@ const useLibraryComponent = () => {
     items,
     defaultTabKey,
     onTabChange,
+    search,
   };
 };
 

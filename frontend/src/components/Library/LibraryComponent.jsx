@@ -16,6 +16,7 @@ import useLibraryComponent from './useLibraryComponent';
 import { ReactComponent as PlusIcon } from './assets/plus.svg';
 import EmtpyLibraryText from 'components/modals/EmtpyLibraryText';
 import { Empty, Collapse } from 'antd';
+import { Outlet } from 'react-router-dom';
 
 const LibraryComponent = () => {
   const {
@@ -27,6 +28,7 @@ const LibraryComponent = () => {
     items,
     defaultTabKey,
     onTabChange,
+    search,
   } = useLibraryComponent();
   const { Panel } = Collapse;
   return (
@@ -54,7 +56,7 @@ const LibraryComponent = () => {
                 <MobileAddBtn
                   type="primary"
                   onClick={() => {
-                    navigate('/library/addBook');
+                    navigate({ pathname: '/library/addBook', search });
                   }}
                 >
                   <PlusIcon />
@@ -83,6 +85,7 @@ const LibraryComponent = () => {
           </StyledSection>
         )}
       </Container>
+      <Outlet />
     </>
   );
 };

@@ -1,31 +1,20 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const useBookItem = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [bookId, setBookId] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const tabSearch = location.search;
 
   const showDrawer = useCallback(
     _id => {
       setBookId(_id);
-      searchParams.set('book', _id);
-      setSearchParams(searchParams);
+      navigate({ pathname: `/library/${_id}`, search: tabSearch });
     },
-    [searchParams, setSearchParams]
+    [navigate, tabSearch]
   );
-  const onCloseDrawer = () => {
-    searchParams.delete('book');
-    setSearchParams(searchParams);
-  };
-  useEffect(() => {
-    if (searchParams.get('book')) {
-      setOpenDrawer(true);
-    } else {
-      setOpenDrawer(false);
-    }
-  }, [setOpenDrawer, searchParams]);
 
-  return { openDrawer, showDrawer, onCloseDrawer, setBookId, bookId };
+  return { showDrawer, setBookId, bookId };
 };
 export default useBookItem;

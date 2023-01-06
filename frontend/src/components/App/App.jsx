@@ -12,6 +12,7 @@ import MobileRoute from 'components/MobileRoute/MobileRoute';
 import MobileAddBook from 'pages/MobileAddBook';
 import AboutApp from 'components/Signup/AboutApp';
 import { getFetchingCurrent } from 'redux/auth';
+import BookDrawer from 'components/Library/BookDrawer';
 
 const Register = lazy(() => import('pages/Register'));
 const Login = lazy(() => import('pages/Login'));
@@ -77,17 +78,29 @@ export default function App() {
                   <Library />
                 </PrivateRoute>
               }
-            />
-            <Route
-              path="library/addBook"
-              element={
-                <PrivateRoute>
-                  <MobileRoute redirectTo="library">
-                    <MobileAddBook />
-                  </MobileRoute>
-                </PrivateRoute>
-              }
-            />
+            >
+              <Route
+                path="addBook"
+                element={
+                  <PrivateRoute>
+                    <MobileRoute redirectTo="library">
+                      <MobileAddBook />
+                    </MobileRoute>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <PrivateRoute>
+                    <MobileRoute redirectTo="library">
+                      <BookDrawer />
+                    </MobileRoute>
+                  </PrivateRoute>
+                }
+              />
+            </Route>
+
             <Route
               path="training"
               element={

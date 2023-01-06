@@ -1,4 +1,4 @@
-import { Spin, Drawer, Descriptions } from 'antd';
+import { Spin, Drawer, Descriptions, Space, Dropdown, Button } from 'antd';
 import styled from 'styled-components';
 
 export const DrawerStyled = styled(Drawer)`
@@ -12,13 +12,11 @@ export const DrawerStyled = styled(Drawer)`
   }
   .ant-drawer-body {
     padding: 0;
-    /* overflow-y: hidden; */
   }
   .ant-drawer-body::-webkit-scrollbar {
     display: none;
   }
   .ant-drawer-content {
-    /* position: relative; */
   }
   @media (max-width: ${p => p.theme.breakpoints.tablet}) {
     .ant-drawer-content-wrapper,
@@ -123,4 +121,42 @@ export const DescriptionsItemContent = styled.span`
 `;
 export const DescriptionsStyled = styled(Descriptions)`
   /* background-color: red; */
+`;
+
+export const SpaceStyled = styled(Space)`
+  position: fixed;
+  bottom: 10px;
+  right: 40px;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    bottom: 40px;
+    right: 40px;
+  }
+  .ant-dropdown-menu {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .ant-dropdown-menu-item {
+    padding: 5px 0;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  .ant-btn-icon-only {
+    height: 35px;
+    width: 35px;
+    background: ${p => p.theme.colors.white};
+    @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+      height: 38px;
+      width: 38px;
+    }
+  }
+`;
+export const DropdownStyled = styled(Dropdown)`
+  /* background-color: black; */
+`;
+
+export const ButtonItemsStyled = styled(Button)`
+  margin-right: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: none;
 `;
