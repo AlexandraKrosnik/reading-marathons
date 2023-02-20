@@ -1,22 +1,12 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, InputNumber } from 'antd';
 import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
   font-family: 'Montserrat';
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto; */
-
-  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    /* margin-bottom: 20px; */
-  }
-
+  padding: 10px 15px 0 25px;
   @media (min-width: ${p => p.theme.breakpoints.desktop}) {
     width: fit-content;
     margin: 0 auto;
-    /* margin-bottom: 40px; */
   }
 `;
 
@@ -51,38 +41,36 @@ export const FormItem = styled(Form.Item)`
 export const StyledInput = styled(Input)`
   height: 35px;
 
-  border-radius: 0;
-  background-color: ${p => p.theme.colors.mainBackground};
+  border-radius: 7px;
+  background-color: ${p => p.theme.colors.white};
 
   &:hover,
   :focus {
     border-color: ${p => p.theme.colors.mainBackground};
-    background-color: ${p => p.theme.colors.white};
     box-shadow: ${p => p.theme.shadows.input};
   }
 `;
 
-export const TitleInput = styled(StyledInput)`
-  /* @media (min-width: ${p => p.theme.breakpoints.desktop}) {
-    width: 346px;
-  } */
-`;
-
-export const AuthorInput = styled(StyledInput)`
-  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    width: 336px;
+export const StyledInputNumber = styled(InputNumber)`
+  height: 35px;
+  border-radius: 7px;
+  width: 100%;
+  .ant-input-number-handler-wrap {
+    border-radius: 0 7px 7px 0;
   }
-
-  /* @media (min-width: ${p => p.theme.breakpoints.desktop}) {
-    width: 250px;
-  } */
+  .ant-input-number-input {
+    height: 35px;
+  }
 `;
 
-export const StyledBox = styled(Form.Item)`
+export const StyledButtonBox = styled(Form.Item)`
   display: flex;
   justify-content: center;
   margin-bottom: 0;
   height: fit-content;
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    justify-content: flex-end;
+  }
 `;
 
 export const StyledButton = styled(Button)`
@@ -91,12 +79,14 @@ export const StyledButton = styled(Button)`
 
   height: 42px;
   min-width: 170px;
-  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+  border-radius: 20px;
+  @media (max-width: ${p => p.theme.breakpoints.desktop}) and (min-width: ${p =>
+      p.theme.breakpoints.tablet}) {
     min-width: 404px;
   }
-  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+  /* @media (min-width: ${p => p.theme.breakpoints.desktop}) {
     min-width: 270px;
-  }
+  } */
 `;
 
 export const Wrapper = styled.div`
@@ -120,13 +110,6 @@ export const Box = styled.div`
     margin-top: 0;
 
     margin-left: 60px;
-    /* width: fit-content; */
-
-    /* display: flex;
-    align-items: center; */
-
-    /* gap: 32px; */
-    /* margin-bottom: 25px; */
   }
 
   @media (min-width: ${p => p.theme.breakpoints.desktop}) {

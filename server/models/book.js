@@ -65,6 +65,7 @@ const joiSchema = Joi.object({
   pages: Joi.number().integer().required(),
   leftPages: Joi.number().integer(),
   status: Joi.string().valid("plan", "already", "now"),
+  readTimes: Joi.number().integer(),
   inTraining: Joi.boolean(),
   image: Joi.string().allow(""),
   rating: Joi.number(),

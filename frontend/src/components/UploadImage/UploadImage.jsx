@@ -1,8 +1,8 @@
 import ImgCrop from 'antd-img-crop';
 import useUploadImage from './useUploadImage';
 import { UploadImg } from './UploadImage.styled';
-const UploadImages = (onChange, isAdd) => {
-  const { fileList, props } = useUploadImage(onChange, isAdd);
+const UploadImages = ({ onChange, isAdd, url }) => {
+  const { fileList, props } = useUploadImage(onChange, isAdd, url);
   return (
     <ImgCrop rotate fillColor="transparent" aspect={2 / 3} modalWidth={500}>
       <UploadImg

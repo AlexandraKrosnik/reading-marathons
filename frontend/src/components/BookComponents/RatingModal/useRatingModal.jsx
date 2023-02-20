@@ -1,3 +1,4 @@
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import {
@@ -5,16 +6,37 @@ import {
   useUpdateBookReviewMutation,
 } from 'redux/RTKQuery/booksApi';
 
-const useRatingModal = (bookId, onClose) => {
+const useRatingModal = () => {
   const [rating, setRating] = useState(null);
   const [resume, setResume] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [bookId, setBookId] = useState();
+  const { search } = useLocation();
+  const params = useParams();
+  const navigate = useNavigate();
 
-  const { data, isLoading, error } = useGetBookByIdQuery(bookId);
+  const { data, isLoading, error } = useGetBookByIdQuery(bookId, {
+    skip: !bookId,
+  });
 
   const [updateBookReview] = useUpdateBookReviewMutation();
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    const book = params.id;
+    if (book) {
+      setBookId(book);
+    }
+  }, [params]);
+
+  const onCloseModal = () => {
+    setTimeout(() => {
+      navigate({ pathname: `/library`, search });
+    }, 100);
+    setIsModalOpen(false);
+  };
 
   const onFinish = async values => {
     const result = await updateBookReview({
@@ -29,7 +51,7 @@ const useRatingModal = (bookId, onClose) => {
       form.resetFields();
     }
 
-    onClose();
+    onCloseModal();
   };
 
   useEffect(() => {
@@ -51,6 +73,8 @@ const useRatingModal = (bookId, onClose) => {
     resume,
     setResume,
     isDisabled,
+    onCloseModal,
+    isModalOpen,
   };
 };
 

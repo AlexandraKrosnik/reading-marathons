@@ -1,18 +1,41 @@
 import styled from 'styled-components';
 import TextArea from 'antd/lib/input/TextArea';
-import { Button, Form } from 'antd';
+import { Button, Form, Modal } from 'antd';
+
+export const RatingModalContent = styled(Modal)`
+  width: fit-content;
+  /* margin: 0 auto; */
+  .ant-modal-content {
+    width: 80vw;
+    /* height: 80vh; */
+    padding: 25px 20px;
+    background-color: ${({ theme }) => theme.colors.white};
+    overflow-y: auto;
+    border-radius: 7px;
+    @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+      /* height: 450px; */
+    }
+    @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+      width: fit-content;
+      min-width: 50vw;
+      /* height: 350px; */
+    }
+  }
+  .ant-modal-body {
+    padding: 0;
+  }
+`;
 
 export const StyledRatingBox = styled.div`
   width: 100%;
-  max-width: 280px;
-  max-height: 395px;
-  padding: 20px 20px 40px;
-  margin: auto;
+  /* max-width: 280px; */
+  /* max-height: 395px; */
+  /* padding: 20px 20px 30px; */
+  /* margin: auto; */
   background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.modal};
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: 608px;
-    max-height: 399px;
+    /* max-width: 608px; */
+    /* max-height: 399px; */
   }
 `;
 

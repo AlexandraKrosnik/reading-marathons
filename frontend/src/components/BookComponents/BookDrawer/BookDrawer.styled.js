@@ -40,44 +40,34 @@ export const SpinStyled = styled(Spin)`
   }
 `;
 export const HeaderStyled = styled.div`
-  position: relative;
+  position: fixed;
+  width: 100%;
+  overflow-y: hidden;
+  z-index: 4;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 500px;
+  }
 `;
 
 export const HeadStyled = styled.div`
-  position: fixed;
   display: block;
   height: 100px;
-  width: 100%;
+  /* width: 100%; */
   background-color: #fad9c3;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
-  z-index: 2;
+
   @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    width: 500px;
     border-top-right-radius: 0px;
   }
 `;
 export const MiddleStyled = styled.div`
-  width: 100%;
+  display: block;
+  /* width: 100%; */
   height: 100px;
-  display: block;
-  position: absolute;
-  display: block;
-  top: 100px;
   background-color: white;
-  z-index: 1;
 `;
-
-export const BodyStyled = styled.div`
-  width: 325px;
-  margin: 0 auto;
-  padding-top: 200px;
-  .ant-descriptions-item-container {
-    align-items: baseline;
-  }
-`;
-
 export const DrawerImgStyled = styled.img`
   position: absolute;
   height: 150px;
@@ -89,8 +79,17 @@ export const DrawerImgStyled = styled.img`
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
     rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  z-index: 3;
   @media (min-width: ${p => p.theme.breakpoints.tablet}) {
     top: 20px;
+  }
+`;
+export const BodyStyled = styled.div`
+  width: 325px;
+  margin: 0 auto;
+  padding-top: 200px;
+  .ant-descriptions-item-container {
+    align-items: baseline;
   }
 `;
 

@@ -1,4 +1,4 @@
-import { Button, Tabs, Collapse } from 'antd';
+import { Button, Tabs } from 'antd';
 import styled from 'styled-components';
 
 export const StyledSection = styled.section`
@@ -6,18 +6,18 @@ export const StyledSection = styled.section`
   font-family: 'Montserrat';
 `;
 
-export const StyledButton = styled(Button)`
-  display: block;
-  min-width: 200px;
-  min-height: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 35px;
+// export const StyledButton = styled(Button)`
+//   display: block;
+//   min-width: 200px;
+//   min-height: 40px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 35px;
 
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 1.25;
-`;
+//   font-weight: 600;
+//   font-size: 16px;
+//   line-height: 1.25;
+// `;
 export const StyledTabs = styled(Tabs)`
   @media (max-width: ${p => p.theme.breakpoints.tablet}) {
     .ant-tabs-tab {
@@ -29,7 +29,7 @@ export const StyledTabs = styled(Tabs)`
   }
 `;
 
-export const MobileAddBtn = styled(Button)`
+export const AddBtn = styled(Button)`
   z-index: 1;
 
   display: flex;
@@ -42,8 +42,15 @@ export const MobileAddBtn = styled(Button)`
   border-radius: 50%;
 
   position: fixed;
-  bottom: 12px;
+  bottom: 26px;
   left: calc(50% - 26px);
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    left: 87%;
+    bottom: 35px;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    bottom: 50px;
+  }
 `;
 
 export const TextStyledPrimary = styled.p`
@@ -65,11 +72,11 @@ export const TextStyled = styled.span`
   color: ${p => p.theme.colors.secondaryFontColor};
 `;
 
-export const CollapseStyled = styled(Collapse)`
-  border: none;
-  background-color: inherit;
-  .ant-collapse-item:last-child > .ant-collapse-content {
-    background-color: inherit;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-  }
-`;
+// export const CollapseStyled = styled(Collapse)`
+//   border: none;
+//   background-color: inherit;
+//   .ant-collapse-item:last-child > .ant-collapse-content {
+//     background-color: inherit;
+//     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+//   }
+// `;

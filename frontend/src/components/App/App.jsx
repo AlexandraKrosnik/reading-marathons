@@ -9,10 +9,12 @@ import PublicRoute from 'components/PublicRoute';
 import GoogleRedirect from 'components/Login/GoogleRedirect';
 
 import MobileRoute from 'components/MobileRoute/MobileRoute';
-import MobileAddBook from 'pages/MobileAddBook';
+import AddBook from 'pages/AddBook';
 import AboutApp from 'components/Signup/AboutApp';
 import { getFetchingCurrent } from 'redux/auth';
-import BookDrawer from 'components/Library/BookDrawer';
+import BookDrawer from 'components/BookComponents/BookDrawer';
+import BookModal from 'components/BookComponents/BookModal/BookModal';
+import RatingModal from 'components/BookComponents/RatingModal';
 
 const Register = lazy(() => import('pages/Register'));
 const Login = lazy(() => import('pages/Login'));
@@ -83,9 +85,7 @@ export default function App() {
                 path="addBook"
                 element={
                   <PrivateRoute>
-                    <MobileRoute redirectTo="library">
-                      <MobileAddBook />
-                    </MobileRoute>
+                    <AddBook />
                   </PrivateRoute>
                 }
               />
@@ -93,9 +93,23 @@ export default function App() {
                 path=":id"
                 element={
                   <PrivateRoute>
-                    <MobileRoute redirectTo="library">
-                      <BookDrawer />
-                    </MobileRoute>
+                    <BookDrawer />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id/change"
+                element={
+                  <PrivateRoute>
+                    <BookModal />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id/rating"
+                element={
+                  <PrivateRoute>
+                    <RatingModal />
                   </PrivateRoute>
                 }
               />

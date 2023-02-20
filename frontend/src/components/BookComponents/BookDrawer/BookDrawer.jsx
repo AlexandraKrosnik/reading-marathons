@@ -1,4 +1,4 @@
-import { Descriptions, Rate } from 'antd';
+import { Descriptions, Rate, Spin } from 'antd';
 import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import useBookDrawer from './useBookDrawer';
@@ -11,7 +11,7 @@ import {
   BodyStyled,
   HeaderStyled,
   MiddleStyled,
-  DescriptionsStyled,  
+  DescriptionsStyled,
   DescriptionsItemLabel,
   DescriptionsItemContent,
   SpaceStyled,
@@ -20,8 +20,16 @@ import {
 } from './BookDrawer.styled';
 
 const BookDrawer = () => {
-  const { data, isLoading, isMobile, deleteBookById, isOpen, onCloseDrawer } =
-    useBookDrawer();
+  const {
+    data,
+    isLoading,
+    isMobile,
+    showPromiseConfirm,
+    isOpen,
+    onCloseDrawer,
+    isDeleteLoading,
+    onShowChangeModal,
+  } = useBookDrawer();
   const book = data?.book;
   const items = [
     {
@@ -31,7 +39,7 @@ const BookDrawer = () => {
           shape="circle"
           type="ghost"
           icon={<DeleteOutlined style={{ fontSize: '20px' }} />}
-          onClick={deleteBookById}
+          onClick={showPromiseConfirm}
         ></ButtonItemsStyled>
       ),
     },
@@ -42,7 +50,7 @@ const BookDrawer = () => {
           shape="circle"
           type="ghost"
           icon={<EditOutlined style={{ fontSize: '20px' }} />}
-          // onClick={}
+          onClick={onShowChangeModal}
         ></ButtonItemsStyled>
       ),
     },
@@ -58,13 +66,12 @@ const BookDrawer = () => {
     >
       {isLoading && <SpinStyled size="large" />}
       {book && (
-        <>
+        <Spin spinning={isDeleteLoading}>
           <HeaderStyled>
-            <HeadStyled>
-              <DrawerImgStyled src={book.image?.url} alt={book.title} />
-            </HeadStyled>
+            <DrawerImgStyled src={book.image?.url} alt={book.title} />
+            <HeadStyled></HeadStyled>
+            <MiddleStyled></MiddleStyled>
           </HeaderStyled>
-          <MiddleStyled></MiddleStyled>
 
           <BodyStyled>
             <TitleStyled>{book.title}</TitleStyled>
@@ -112,7 +119,9 @@ const BookDrawer = () => {
                   {book.readTimes}
                 </DescriptionsItemContent>
               </Descriptions.Item>
-              {book.rating && (
+              {(book.rating ||
+                book.status !== 'plan' ||
+                book.readTimes > 0) && (
                 <>
                   <Descriptions.Item
                     label={
@@ -133,7 +142,7 @@ const BookDrawer = () => {
                     }
                   >
                     <DescriptionsItemContent>
-                      {book.resume}
+                      {book?.resume?.length > 0 ? book.resume : 'Немає відгуку'}
                     </DescriptionsItemContent>
                   </Descriptions.Item>
                 </>
@@ -155,7 +164,7 @@ const BookDrawer = () => {
               </DropdownStyled>
             </SpaceStyled>
           </BodyStyled>
-        </>
+        </Spin>
       )}
     </DrawerStyled>
   );

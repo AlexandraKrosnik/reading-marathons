@@ -6,12 +6,11 @@ import {
 } from './EmptyLibraryText.styled';
 import useMatchMedia from 'hooks/useMatchMedia';
 
-import { ReactComponent as ArrowIcon } from 'components/Library/assets/arrow.svg';
-import { ReactComponent as BookIcon } from 'components/Library/assets/icon-book.svg';
-import { ReactComponent as FlagIcon } from 'components/Library/assets/flag.svg';
+import { ReactComponent as ArrowIcon } from 'images/library/arrow.svg';
+import { ReactComponent as BookIcon } from 'images/library/icon-book.svg';
+import { ReactComponent as FlagIcon } from 'images/library/flag.svg';
 
 export default function EmtpyLibraryText({ isEmptyLibrary, onClick, style }) {
-
   const { isMobile } = useMatchMedia();
 
   return (

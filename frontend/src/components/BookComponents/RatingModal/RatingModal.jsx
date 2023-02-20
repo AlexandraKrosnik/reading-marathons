@@ -1,4 +1,5 @@
 import {
+  RatingModalContent,
   FormItem,
   StyledBox,
   StyledRatingBox,
@@ -13,7 +14,7 @@ import Loader from 'components/Loader';
 import { Form, Rate } from 'antd';
 import useRatingModal from './useRatingModal';
 
-const RatingModal = ({ onClose, bookId }) => {
+const RatingModal = () => {
   const {
     isLoading,
     error,
@@ -24,10 +25,18 @@ const RatingModal = ({ onClose, bookId }) => {
     resume,
     setResume,
     isDisabled,
-  } = useRatingModal(bookId, onClose);
+    onCloseModal,
+    isModalOpen,
+  } = useRatingModal();
 
   return (
-    <>
+    <RatingModalContent
+      open={isModalOpen}
+      onCancel={onCloseModal}
+      footer={null}
+      closable={false}
+      width="fit-content"
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -64,7 +73,7 @@ const RatingModal = ({ onClose, bookId }) => {
                 </FormItem>
 
                 <StyledBox>
-                  <StyledRatingButton onClick={onClose}>
+                  <StyledRatingButton onClick={onCloseModal}>
                     Назад
                   </StyledRatingButton>
                   <StyledRatingButton
@@ -80,7 +89,7 @@ const RatingModal = ({ onClose, bookId }) => {
           )}
         </StyledRatingBox>
       )}
-    </>
+    </RatingModalContent>
   );
 };
 export default RatingModal;

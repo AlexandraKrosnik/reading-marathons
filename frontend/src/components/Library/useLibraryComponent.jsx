@@ -50,10 +50,12 @@ const useLibraryComponent = () => {
     if (!tab) {
       searchParams.set('tab', params[0]);
       setSearchParams(searchParams);
-    } else if (tab && params.includes(tab)) {
-      setDefaultTabKey(tab);
     }
   }, [tab, params, setSearchParams, searchParams]);
+
+  useEffect(() => {
+    setDefaultTabKey(tab);
+  }, [tab]);
 
   const items = useMemo(() => {
     return [
@@ -79,7 +81,7 @@ const useLibraryComponent = () => {
   }, [alreadyBooks, nowBooks, planBooks, params]);
 
   const onTabChange = key => {
-    setDefaultTabKey(key);
+    // setDefaultTabKey(key);
     searchParams.set('tab', key);
     setSearchParams(searchParams);
   };

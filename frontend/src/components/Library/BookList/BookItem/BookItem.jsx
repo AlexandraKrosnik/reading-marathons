@@ -17,10 +17,9 @@ import {
   StyledRating,
   StyledLSTop,
 } from './BookItem.styled';
-import BookDrawer from 'components/Library/BookDrawer';
 import useBookItem from './useBookItem';
 
-export const BookItem = ({ item, toggleModal, setBookId }) => {
+export const BookItem = ({ item }) => {
   const {
     _id,
     leftPages,
@@ -31,8 +30,9 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
     author,
     publication,
     rating,
+    status,
   } = item;
-  const { showDrawer } = useBookItem();
+  const { showDrawer, showRatingModal } = useBookItem();
 
   const progress = Math.floor((leftPages * 100) / pages);
   return (
@@ -73,7 +73,7 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
               </Box>
             </StyledLSTop>
 
-            {rating && (
+            {(status !== 'plan' || readTimes > 0) && (
               <StyledRating>
                 <Rate
                   style={{ width: '120px', fontSize: '17px' }}
@@ -82,8 +82,7 @@ export const BookItem = ({ item, toggleModal, setBookId }) => {
                 />
                 <EditOutlined
                   onClick={() => {
-                    setBookId(_id);
-                    toggleModal();
+                    showRatingModal(_id);
                   }}
                 />
               </StyledRating>

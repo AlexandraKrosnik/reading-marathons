@@ -52,7 +52,7 @@ const Header = () => {
                 <Logo to="/library">BR</Logo>
                 {isLoggedIn && (
                   <FlexWrapper>
-                    <StyledLink to="/library?tab=plan">
+                    <StyledLink to="/library">
                       <MdOutlineHome size={20} />
                     </StyledLink>
                     <StatsLink to="/training">
@@ -75,7 +75,7 @@ const Header = () => {
                       <UserName>{userName}</UserName>
                     </FlexWrapper>
                     <FlexWrapper>
-                      <StyledLink to="/library?tab=plan">
+                      <StyledLink to="/library">
                         <MdOutlineHome size={20} />
                       </StyledLink>
                       <StatsLink to="/training">
