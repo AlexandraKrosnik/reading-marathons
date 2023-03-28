@@ -4,9 +4,6 @@ import {
   StyledBox,
   StyledRatingBox,
   StyledRatingButton,
-  StyledRatingLabel,
-  StyledRatingResumeText,
-  StyledRatingText,
   StyledTextArea,
 } from './RatingModal.styled';
 
@@ -20,13 +17,11 @@ const RatingModal = () => {
     error,
     form,
     onFinish,
-    rating,
-    setRating,
-    resume,
-    setResume,
     isDisabled,
     onCloseModal,
     isModalOpen,
+    onValuesChange,
+    Fields,
   } = useRatingModal();
 
   return (
@@ -50,28 +45,24 @@ const RatingModal = () => {
                 layout="vertical"
                 onFinish={onFinish}
                 autoComplete="off"
+                onValuesChange={onValuesChange}
               >
-                <StyledRatingText>Обрати рейтинг книги</StyledRatingText>
-                <Rate
-                  style={{ width: '120px', fontSize: '17px' }}
-                  value={rating}
-                  onChange={value => {
-                    setRating(value);
-                  }}
-                />
-                <FormItem name={'resume'}>
-                  <StyledRatingLabel>
-                    <StyledRatingResumeText>Резюме</StyledRatingResumeText>
-                    <StyledTextArea
-                      value={resume}
-                      onChange={e => {
-                        setResume(e.currentTarget.value);
-                      }}
-                      autoSize={{ maxRows: 7 }}
-                    />
-                  </StyledRatingLabel>
+                <FormItem name={Fields.rating.name} label={Fields.rating.label}>
+                  <Rate
+                    style={{ width: '120px', fontSize: '17px' }}
+                    onChange={value => {
+                      // setRating(value);
+                    }}
+                  />
                 </FormItem>
-
+                <FormItem name={Fields.resume.name} label={Fields.resume.label}>
+                  <StyledTextArea
+                    onChange={e => {
+                      // setResume(e.currentTarget.value);
+                    }}
+                    autoSize={{ maxRows: 7 }}
+                  />
+                </FormItem>
                 <StyledBox>
                   <StyledRatingButton onClick={onCloseModal}>
                     Назад

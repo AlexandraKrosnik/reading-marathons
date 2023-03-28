@@ -14,6 +14,7 @@ const useBookModal = () => {
         navigate({ pathname: `/library`, search });
       }
     }, 150);
+    localStorage.removeItem('BookModal');
 
     setIsModalOpen(false);
   };

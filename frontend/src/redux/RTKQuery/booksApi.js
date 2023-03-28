@@ -32,6 +32,14 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ['Books', 'BookById'],
     }),
+    updateBook: builder.mutation({
+      query: params => ({
+        url: `/books/${params.id}/update`,
+        method: 'PATCH',
+        data: params.data,
+      }),
+      invalidatesTags: ['Books', 'BookById'],
+    }),
     getTraining: builder.query({
       query: () => ({ url: '/trainings', method: 'GET' }),
       providesTags: ['Trainings'],
@@ -69,6 +77,7 @@ export const {
   useDeleteBookMutation,
   useGetBookByIdQuery,
   useUpdateBookReviewMutation,
+  useUpdateBookMutation,
   useGetTrainingQuery,
   useAddTrainingMutation,
   useDeleteTrainingByIdMutation,

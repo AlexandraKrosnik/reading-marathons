@@ -22,28 +22,34 @@ const BookForm = ({ action }) => {
     isLoading,
     setSelectedFile,
     isAddCompleted,
-    onChangeStatus,
-    disabledReadTimes,
+    onStatusChange,
+    isDisabledReadTimes,
     isChange,
     data,
+    onValuesChange,
+    isDisabledButton,
+    initialImage,
+    showConfirmUpdate,
   } = useForm(action);
 
   return (
     <StyledForm
       form={form}
       layout="vertical"
-      onFinish={onAdd}
+      onFinish={isChange ? showConfirmUpdate : onAdd}
       autoComplete="off"
       initialValues={{
         readTimes: 0,
         status: data?.book?.status === 'now' ? 'now' : 'plan',
       }}
+      onValuesChange={onValuesChange}
     >
       <Wrapper>
         <UploadImages
+          name={Fields.image.name}
           onChange={setSelectedFile}
           isAdd={isAddCompleted}
-          url={data?.book?.image?.url}
+          url={initialImage}
         />
 
         <Box>
@@ -80,7 +86,7 @@ const BookForm = ({ action }) => {
             label={Fields.status.label}
             rules={[yupSync]}
           >
-            <Radio.Group onChange={onChangeStatus}>
+            <Radio.Group onChange={onStatusChange}>
               {isChange && data?.book?.status === 'now' ? (
                 <Radio value="now"> Читаю </Radio>
               ) : (
@@ -96,13 +102,16 @@ const BookForm = ({ action }) => {
             label={Fields.readTimes.label}
             rules={[yupSync]}
           >
-            <StyledInputNumber min={1} disabled={disabledReadTimes} />
+            <StyledInputNumber min={1} disabled={isDisabledReadTimes} />
           </FormItem>
           {isChange && <></>}
         </Box>
       </Wrapper>
       <StyledButtonBox>
-        <StyledButton disabled={isLoading} htmlType="submit">
+        <StyledButton
+          disabled={isLoading || isDisabledButton}
+          htmlType="submit"
+        >
           {isChange ? 'Редагувати' : 'Додати'}
         </StyledButton>
       </StyledButtonBox>

@@ -14,12 +14,12 @@ const add = async (req, res) => {
       `Book with title=${title}, author=${author} has already been added!`
     );
   }
-  let newBook;
+  let newBookImage;
   if (image) {
     const { url, public_id } = await cloudinary.uploader.upload(image, {
       upload_preset: "book_images",
     });
-    newBook = {
+    newBookImage = {
       url,
       public_id,
     };
@@ -28,7 +28,7 @@ const add = async (req, res) => {
   const book = await Book.create({
     ...req.body,
     user: id,
-    image: image ? newBook : defaultImage,
+    image: image ? newBookImage : defaultImage,
   });
   if (!book) {
     throw BadRequest(`Check the entered data!`);

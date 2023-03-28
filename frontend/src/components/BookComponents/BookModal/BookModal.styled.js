@@ -9,18 +9,18 @@ export const BookModalContent = styled(Modal)`
   width: fit-content;
   .ant-modal-content {
     width: 80vw;
-    height: 80vh;
+    height: 70vh;
     padding: 25px 20px;
     background-color: ${({ theme }) => theme.colors.white};
     overflow-y: auto;
     border-radius: 7px;
     @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-      height: 450px;
+      height: 570px;
     }
     @media (min-width: ${p => p.theme.breakpoints.desktop}) {
       width: fit-content;
       min-width: 50vw;
-      height: 350px;
+      height: 360px;
     }
   }
   .ant-modal-body {

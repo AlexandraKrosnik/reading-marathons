@@ -17,6 +17,7 @@ const useUploadImage = (onChange, isAdd, url) => {
       onChange(null);
       return;
     }
+
     onChange(fileList[0]);
   }, [fileList, onChange, defaultImage.url]);
 

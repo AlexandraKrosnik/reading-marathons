@@ -15,4 +15,10 @@ router.patch(
   validation(joiSchemaReviews),
   ctrlWrapper(ctrl.updateReviews)
 );
+router.patch(
+  "/:bookId/update",
+  auth,
+  validation(joiSchema),
+  ctrlWrapper(ctrl.updateBook)
+);
 module.exports = router;
