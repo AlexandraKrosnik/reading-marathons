@@ -2,8 +2,8 @@ import { useState, useLayoutEffect } from 'react';
 import device from 'styles/device';
 
 const queries = [
-  `${device.mobile} and (max-width: 767px)`,
-  `${device.tablet} and (max-width: 1279px)`,
+  `${device.mobile} and (max-width: 767px) `,
+  `${device.tablet} and (max-width: 1279px) and (min-width: 766px)`,
   `${device.desktop}`,
 ];
 

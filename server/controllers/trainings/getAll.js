@@ -2,7 +2,7 @@ const { Training } = require("../../models");
 
 const getAll = async (req, res) => {
   const { id } = req.user;
-  const training = await Training.find({ user: id }).populate(
+  const trainings = await Training.find({ user: id }).populate(
     "user",
     "_id name email"
   );
@@ -11,7 +11,7 @@ const getAll = async (req, res) => {
     message: "Success",
     code: 200,
     data: {
-      training,
+      trainings,
     },
   });
 };

@@ -1,7 +1,7 @@
 const { Book } = require("../../models");
 const { NotFound } = require("http-errors");
 
-const updateReviews = async (req, res) => {
+const updateReviewsById = async (req, res) => {
   const { bookId } = req.params;
   const { id } = req.user;
   const { rating, resume } = req.body;
@@ -23,4 +23,4 @@ const updateReviews = async (req, res) => {
   });
 };
 
-module.exports = updateReviews;
+module.exports = updateReviewsById;

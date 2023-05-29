@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authOperations } from 'redux/auth';
@@ -10,16 +10,19 @@ const GoogleRedirect = () => {
   const token = searchParams.get('token');
   const name = searchParams.get('name');
   const email = searchParams.get('email');
-  console.log('GoogleRedirect: ' + searchParams.get('token'));
-  dispatch(
-    booksApi.util.invalidateTags([
-      { type: 'Books' },
-      { type: 'BookById' },
-      { type: 'Trainings' },
-      { type: 'Statistics' },
-    ])
-  );
-  dispatch(authOperations.authGoogle({ token, user: { email, name } }));
+
+  useEffect(() => {
+    dispatch(
+      booksApi.util.invalidateTags([
+        { type: 'Books' },
+        { type: 'BookById' },
+        { type: 'Trainings' },
+        { type: 'Statistics' },
+      ])
+    );
+    dispatch(authOperations.authGoogle({ token, user: { email, name } }));
+  }, [dispatch, email, name, token]);
+
   // dispatch(authOperations.fetchCurrentUser());
 
   return <p>Google login succeeded</p>;

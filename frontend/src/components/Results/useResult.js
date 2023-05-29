@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-  useGetTrainingQuery,
-  useGetStatisticsByIdQuery,
-  useUpdateStatisticsByIdMutation,
+  useGetTrainingByIdQuery,
+  useUpdateTrainingByIdMutation,
 } from 'redux/RTKQuery/booksApi';
 
 import openNotificationWithIcon from 'components/Notification';
@@ -11,18 +10,18 @@ const useResult = () => {
   const [form] = Form.useForm();
   const [results, setResults] = useState();
   const [statisticId, setStatisticId] = useState(undefined);
-  const { data: training } = useGetTrainingQuery();
-  const { data: statistic } = useGetStatisticsByIdQuery(statisticId, {
-    skip: typeof statisticId !== 'string',
-  });
-  const [updateStatisticsById] = useUpdateStatisticsByIdMutation();
+  const { data: training } = useGetTrainingByIdQuery();
+  // const { data: statistic } = useGetStatisticsByIdQuery(statisticId, {
+  //   skip: typeof statisticId !== 'string',
+  // });
+  const [updateStatisticsById] = useUpdateTrainingByIdMutation();
 
   useEffect(() => {
     if (training?.training.length !== 0) {
       setStatisticId(training?.training[0].statistics);
-      setResults(statistic?.statistic.result);
+      // setResults(statistic?.statistic.result);
     }
-  }, [training?.training, statistic]);
+  }, [training?.training]);
 
   const onSubmit = async ({ date, pages }) => {
     const newDate = new Date(date.utc());
@@ -37,7 +36,7 @@ const useResult = () => {
     }
     form.resetFields();
   };
-  return { onSubmit, results, form, training, statistic };
+  return { onSubmit, results, form, training };
 };
 
 export default useResult;

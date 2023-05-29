@@ -1,10 +1,11 @@
 import BookCard from '../BookCard';
 import PropTypes from 'prop-types';
+import { BooksListStyled } from './BooksListFilledMobile.styled';
 
 const BooksListFilledMobile = ({ books, onClick }) => {
   return (
     <>
-      <ul>
+      <BooksListStyled>
         {books.map(({ _id, title, author, publication, pages }) => (
           <BookCard
             key={_id}
@@ -16,7 +17,7 @@ const BooksListFilledMobile = ({ books, onClick }) => {
             onClick={onClick}
           />
         ))}
-      </ul>
+      </BooksListStyled>
     </>
   );
 };

@@ -19,7 +19,9 @@ import RatingModal from 'components/BookComponents/RatingModal';
 const Register = lazy(() => import('pages/Register'));
 const Login = lazy(() => import('pages/Login'));
 const Library = lazy(() => import('pages/Library'));
-const Training = lazy(() => import('pages/Training'));
+const Goal = lazy(() => import('pages/Goal'));
+const GoalsList = lazy(() => import('pages/GoalsList'));
+const AddGoal = lazy(() => import('pages/AddGoal'));
 
 export default function App() {
   const dispatch = useDispatch();
@@ -116,10 +118,26 @@ export default function App() {
             </Route>
 
             <Route
-              path="training"
+              path="goals"
               element={
                 <PrivateRoute>
-                  <Training />
+                  <GoalsList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="goals/addGoal"
+              element={
+                <PrivateRoute>
+                  <AddGoal />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="goals/:id"
+              element={
+                <PrivateRoute>
+                  <Goal />
                 </PrivateRoute>
               }
             />

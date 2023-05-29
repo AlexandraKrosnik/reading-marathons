@@ -6,7 +6,7 @@ export const booksApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: 'http://localhost:3001/api',
   }),
-  tagTypes: ['Books', 'BookById', 'Trainings', 'Statistics'],
+  tagTypes: ['Books', 'BookById', 'Trainings', 'TrainingById'],
   endpoints: builder => ({
     getBooks: builder.query({
       query: () => ({ url: '/books', method: 'GET' }),
@@ -40,34 +40,46 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ['Books', 'BookById'],
     }),
-    getTraining: builder.query({
+    getTrainings: builder.query({
       query: () => ({ url: '/trainings', method: 'GET' }),
       providesTags: ['Trainings'],
     }),
+    getTrainingById: builder.query({
+      query: id => ({ url: `/trainings/${id}`, method: 'GET' }),
+      providesTags: ['TrainingById'],
+    }),
     addTraining: builder.mutation({
       query: values => ({ url: '/trainings', method: 'POST', data: values }),
-      invalidatesTags: ['Books', 'BookById', 'Trainings', 'Statistics'],
+      invalidatesTags: ['Books', 'BookById', 'Trainings', 'TrainingById'],
     }),
-    deleteTrainingById: builder.mutation({
-      query: id => ({ url: `/trainings/${id}`, method: 'DELETE' }),
-      invalidatesTags: ['Trainings'],
-    }),
-    getStatisticsById: builder.query({
-      query: id => ({ url: `/statistics/${id}`, method: 'GET' }),
-      providesTags: ['Statistics', 'Trainings'],
-    }),
-    updateStatisticsById: builder.mutation({
+    updateTrainingById: builder.mutation({
       query: params => ({
-        url: `/statistics/${params.id}`,
+        url: `/trainings/${params.id}/update`,
         method: 'PATCH',
         data: params.data,
       }),
-      invalidatesTags: ['Books', 'BookById', 'Trainings', 'Statistics'],
+      invalidatesTags: ['Trainings', 'TrainingById'],
     }),
-    deleteStatisticsById: builder.mutation({
-      query: id => ({ url: `/statistics/${id}`, method: 'DELETE' }),
-      invalidatesTags: ['Statistics'],
+    deleteTrainingById: builder.mutation({
+      query: id => ({ url: `/trainings/${id}`, method: 'DELETE' }),
+      invalidatesTags: ['TrainingById'],
     }),
+    // getStatisticsById: builder.query({
+    //   query: id => ({ url: `/statistics/${id}`, method: 'GET' }),
+    //   providesTags: ['Statistics', 'Trainings'],
+    // }),
+    // updateStatisticsById: builder.mutation({
+    //   query: params => ({
+    //     url: `/statistics/${params.id}`,
+    //     method: 'PATCH',
+    //     data: params.data,
+    //   }),
+    //   invalidatesTags: ['Books', 'BookById', 'Trainings', 'Statistics'],
+    // }),
+    // deleteStatisticsById: builder.mutation({
+    //   query: id => ({ url: `/statistics/${id}`, method: 'DELETE' }),
+    //   invalidatesTags: ['Statistics'],
+    // }),
   }),
 });
 
@@ -78,12 +90,14 @@ export const {
   useGetBookByIdQuery,
   useUpdateBookReviewMutation,
   useUpdateBookMutation,
-  useGetTrainingQuery,
+  useGetTrainingsQuery,
+  useGetTrainingByIdQuery,
   useAddTrainingMutation,
+  useUpdateTrainingByIdMutation,
   useDeleteTrainingByIdMutation,
-  useGetStatisticsByIdQuery,
-  useUpdateStatisticsByIdMutation,
-  useDeleteStatisticsByIdMutation,
+  // useGetStatisticsByIdQuery,
+  // useUpdateStatisticsByIdMutation,
+  // useDeleteStatisticsByIdMutation,
 } = booksApi;
 
 // ------- Приклад використання хуків

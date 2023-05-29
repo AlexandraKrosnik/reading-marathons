@@ -13,7 +13,7 @@ router.patch(
   "/:bookId/review",
   auth,
   validation(joiSchemaReviews),
-  ctrlWrapper(ctrl.updateReviews)
+  ctrlWrapper(ctrl.updateReviewsById)
 );
 router.patch(
   "/:bookId/update",

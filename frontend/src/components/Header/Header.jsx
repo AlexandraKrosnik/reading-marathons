@@ -24,7 +24,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isMobile } = useMatchMedia();
@@ -33,7 +33,6 @@ const Header = () => {
 
   const userName = useSelector(getUserName) || '';
   const firstLetter = userName[0];
-  const tab = searchParams.get('tab');
 
   const toggleModal = () => setIsModalVisible(!isModalVisible);
   const handleLogOut = () => {
@@ -55,7 +54,7 @@ const Header = () => {
                     <StyledLink to="/library">
                       <MdOutlineHome size={20} />
                     </StyledLink>
-                    <StatsLink to="/training">
+                    <StatsLink to="/goals">
                       <HiOutlineBookOpen size={18} />
                     </StatsLink>
 
@@ -78,7 +77,7 @@ const Header = () => {
                       <StyledLink to="/library">
                         <MdOutlineHome size={20} />
                       </StyledLink>
-                      <StatsLink to="/training">
+                      <StatsLink to="/goals">
                         <HiOutlineBookOpen size={18} />
                       </StatsLink>
                       <ExitButton onClick={toggleModal}>Вихід</ExitButton>

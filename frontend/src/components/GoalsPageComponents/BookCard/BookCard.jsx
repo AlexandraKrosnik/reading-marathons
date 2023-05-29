@@ -4,6 +4,7 @@ import {
   StyledIcon,
   StyledDeleteButton,
   StyledTitle,
+  StyledTableBody,
 } from './BooksCard.styled';
 import { ReactComponent as BookIcon } from 'images/svg/bookIconGrey.svg';
 import { FiTrash } from 'react-icons/fi';
@@ -20,7 +21,7 @@ const BookCard = ({ id, title, author, year, pages, onClick }) => {
         <EllipsisText text={title} length={50} />
       </StyledTitle>
       <StyledTable>
-        <tbody>
+        <StyledTableBody>
           <tr>
             <td>Автор:</td>
             <td>{author}</td>
@@ -33,7 +34,7 @@ const BookCard = ({ id, title, author, year, pages, onClick }) => {
             <td>Стор.:</td>
             <td>{pages}</td>
           </tr>
-        </tbody>
+        </StyledTableBody>
       </StyledTable>
       <StyledDeleteButton htmlType="button" onClick={() => onClick(id)}>
         <FiTrash size={20} />

@@ -1,11 +1,14 @@
 import { useMatchMedia } from 'hooks';
-import { useGetBooksQuery, useGetTrainingQuery } from 'redux/RTKQuery/booksApi';
+import {
+  useGetBooksQuery,
+  useGetTrainingByIdQuery,
+} from 'redux/RTKQuery/booksApi';
 import { useEffect, useState } from 'react';
 import usePreviousValue from 'hooks/usePreviousValue';
 
 const useStatisticsTableComponent = () => {
   const { data: trainingsData, isLoading: isLoadingTrainingsData } =
-    useGetTrainingQuery();
+    useGetTrainingByIdQuery();
 
   const { data: booksData, isLoading: isLoadingBooksData } = useGetBooksQuery();
 

@@ -11,23 +11,25 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import {
-  useGetTrainingQuery,
+  useGetTrainingsQuery,
   useGetStatisticsByIdQuery,
 } from 'redux/RTKQuery/booksApi';
 
-const MyGoal = () => {
+const MyGoal = ({ days = 0, books = 0 }) => {
   const [noBooksLeft, setNoBooksLeft] = useState(true);
+  const data = [];
+  const booksLeft = undefined;
 
-  const { data: trainings } = useGetTrainingQuery();
-  const statisticsId = trainings?.training[0]?.statistics;
+  // const { data: trainings } = useGetTrainingsQuery();
+  // const statisticsId = trainings?.training[0]?.statistics;
 
-  const data = useGetStatisticsByIdQuery(statisticsId, {
-    skip: !statisticsId,
-  });
+  // const data = useGetStatisticsByIdQuery(statisticsId, {
+  //   skip: !statisticsId,
+  // });
 
-  const books = data?.data?.statistic?.bookAmount;
-  const days = data?.data?.statistic?.dayAmount;
-  const booksLeft = data?.data?.statistic?.leftBooks;
+  // // const books = data?.data?.statistic?.bookAmount;
+  // // const days = data?.data?.statistic?.dayAmount;
+  // const booksLeft = data?.data?.statistic?.leftBooks;
 
   useEffect(() => {
     booksLeft && booksLeft !== undefined && booksLeft !== 0

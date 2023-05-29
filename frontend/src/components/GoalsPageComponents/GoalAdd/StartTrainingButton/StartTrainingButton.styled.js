@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-export const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 export const StyledButton = styled(Button)`
   display: block;
   width: 171px;
@@ -14,4 +8,12 @@ export const StyledButton = styled(Button)`
   margin: 32px auto 0 auto;
   color: ${p => p.theme.colors.white};
   background-color: ${p => p.theme.colors.accentColor};
+
+  @media screen and (min-width: ${p => p.theme.breakpoints.tablet}) {
+    margin: 40px auto 0 auto;
+  }
+
+  @media screen and (min-width: ${p => p.theme.breakpoints.desktop}) {
+    margin: 40px auto 0 364px;
+  }
 `;

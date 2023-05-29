@@ -1,0 +1,62 @@
+import styled from 'styled-components';
+import { Input, Button } from 'antd';
+import Container from 'components/Container';
+const { Search } = Input;
+
+export const HeaderBackground = styled.div`
+  position: sticky;
+  padding: 5px 0;
+
+  width: 100%;
+  height: 40px;
+  /* margin-top: 1px; */
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+`;
+
+export const ContainerStyled = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+`;
+
+export const SearchStyled = styled(Search)`
+  border-bottom: 1px solid #d9d9d9;
+  width: 60%;
+  &:focus,
+  &:hover {
+    border-bottom-color: var(--ant-primary-5);
+
+    & .ant-btn .anticon {
+      color: var(--ant-primary-5);
+    }
+  }
+  &.ant-input-search .ant-input:focus,
+  &.ant-input-search .ant-input:hover {
+    border-color: green;
+  }
+
+  & .ant-input,
+  & .ant-input-group-addon .ant-btn {
+    border: none;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 50%;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    width: 40%;
+  }
+`;
+
+export const ButtonStyled = styled(Button)`
+  border-radius: 50%;
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 20%;
+    border-radius: 5px;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    width: 15%;
+  }
+`;

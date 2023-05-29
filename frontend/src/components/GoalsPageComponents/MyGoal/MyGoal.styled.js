@@ -1,6 +1,6 @@
-import theme from '../../styles/theme';
+import theme from '../../../styles/theme';
 import styled from 'styled-components';
-import device from '../../styles/device';
+import device from '../../../styles/device';
 
 export const NumberContainer = styled.div`
   background-color: ${theme.colors.white};

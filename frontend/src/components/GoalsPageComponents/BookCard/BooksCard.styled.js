@@ -3,7 +3,8 @@ import { Button } from 'antd';
 
 export const StyledWrapper = styled.li`
   position: relative;
-  height: 168px;
+  min-height: 168px;
+  height: fit-content;
   padding: 20px 46px 0px 34px;
 
   border-bottom: 1px solid ${p => p.theme.colors.borderColor};
@@ -11,20 +12,20 @@ export const StyledWrapper = styled.li`
 
 export const StyledTable = styled.table`
   width: 100%;
-
   font-weight: 500;
   font-size: 12px;
-  line-height: 2.8;
+  line-height: 2;
 
   color: ${p => p.theme.colors.mainFontColor};
+`;
 
-  tbody {
-    td {
-      :nth-child(1) {
-        color: ${p => p.theme.colors.secondaryFontColor};
-        width: 35%;
-      }
-    }
+export const StyledTableBody = styled.tbody`
+  & > tr > td {
+    vertical-align: baseline;
+  }
+  & > tr > td:nth-child(1) {
+    color: ${p => p.theme.colors.secondaryFontColor};
+    width: 35%;
   }
 `;
 

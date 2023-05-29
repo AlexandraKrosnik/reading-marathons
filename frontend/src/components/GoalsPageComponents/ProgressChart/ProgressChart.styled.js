@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import device from '../../styles/device';
-import theme from '../../styles/theme';
+import device from '../../../styles/device';
+import theme from '../../../styles/theme';
 
 export const Container = styled.div`
   display: flex;

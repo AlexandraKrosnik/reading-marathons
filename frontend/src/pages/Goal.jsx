@@ -1,7 +1,7 @@
 import MyTraining from 'components/MyTraining';
-import MyGoal from 'components/MyGoal';
+import MyGoal from 'components/GoalsPageComponents/MyGoal';
 import Container from 'components/Container';
-import ProgressChart from 'components/ProgressChart';
+import ProgressChart from 'components/GoalsPageComponents/ProgressChart';
 import Result from 'components/Results/Results';
 import YearTimer from 'components/Timer/YearTimer';
 import GoalTimer from 'components/Timer/GoalTimer';
@@ -10,15 +10,13 @@ import { useMatchMedia } from 'hooks';
 import { StyledAddButton } from 'components/MyTraining/MyTraining.styled';
 import { ReactComponent as AddIcon } from 'images/svg/iconAdd.svg';
 import { useState, useEffect, useCallback } from 'react';
-import { useGetTrainingQuery } from 'redux/RTKQuery/booksApi';
 import useTrainingFinished from 'hooks/useIsTrainingFinished';
 import WellDoneModal from 'components/modals/WellDoneModal';
 import Modal from 'components/modals/Modal/Modal';
 import { TimersMainWrapper } from 'components/Timer/YearTimer/YearTimer.styled';
 import styled from 'styled-components';
 
-
-const Training = () => {
+const Goal = () => {
   const { isMobile, isTablet, isDesktop } = useMatchMedia();
   const [isVisible, setIsVisible] = useState();
   const [isActiveTraining, setIsActiveTraining] = useState();
@@ -44,14 +42,12 @@ const Training = () => {
 
   return (
     <Container>
-
       {isModalVisible && (
         <Modal onClose={onModalClose}>
           <WellDoneModal onClose={onModalClose} status={isTrainingFinished} />
         </Modal>
       )}
       {isMobile && !isVisible && !isActiveTraining && <MyGoal />}
-
 
       {isMobile && !isActiveTraining && (
         <MyTraining isFormVisible={isVisible} toggleForm={toggleForm} />
@@ -135,7 +131,7 @@ const Training = () => {
   );
 };
 
-export default Training;
+export default Goal;
 
 export const StyledContainer = styled.div`
   padding-top: 28px;

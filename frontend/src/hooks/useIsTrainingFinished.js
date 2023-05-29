@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useGetTrainingQuery } from 'redux/RTKQuery/booksApi';
+import { useGetTrainingByIdQuery } from 'redux/RTKQuery/booksApi';
 
 const useTrainingFinished = () => {
-  const { data: training } = useGetTrainingQuery();
+  const { data: training } = useGetTrainingByIdQuery();
   const [isTrainingFinished, setIsTrainingFinished] = useState();
 
   useEffect(() => {

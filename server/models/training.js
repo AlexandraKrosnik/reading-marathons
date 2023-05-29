@@ -15,6 +15,10 @@ const trainingSchema = Schema({
     type: Date,
     require: true,
   },
+  title: {
+    type: String,
+    require: true,
+  },
   books: [
     {
       book: {
@@ -22,38 +26,42 @@ const trainingSchema = Schema({
         ref: "book",
         require: true,
       },
-      leftPages: {
-        type: Number,
-        default: 0,
-      },
-      status: {
-        type: Boolean,
-        default: false,
+      result: {
+        type: [
+          {
+            date: {
+              type: Date,
+              require: [true, "Please, enter date!"],
+            },
+            pages: {
+              type: Number,
+              require: [true, "Please, write pages you have read!"],
+            },
+          },
+        ],
       },
     },
   ],
-  statistics: {
-    type: Schema.Types.ObjectId,
-    ref: "statistics",
-    require: true,
-  },
 });
 
 const joiSchema = Joi.object({
   start: Joi.date().required(),
   finish: Joi.date().required(),
+  title: Joi.string().required(),
   books: Joi.array().items({
     book: Joi.string(),
-    leftPages: Joi.number().integer(),
-    status: Joi.boolean(),
+    result: Joi.array().items({
+      date: Joi.date().required(),
+      pages: Joi.number().required(),
+    }),
   }),
-  statistics: Joi.string(),
 });
 const joiSchemaAddTraining = Joi.object({
   start: Joi.date().required(),
   finish: Joi.date().required(),
-  books: Joi.array().items(Joi.string()),
-  statistics: Joi.string(),
+  title: Joi.string().required(),
+  books: Joi.array().items(Joi.string()).min(1),
+  booksToRestartReading: Joi.array().items(Joi.string()),
 });
 
 const Training = model("training", trainingSchema);
