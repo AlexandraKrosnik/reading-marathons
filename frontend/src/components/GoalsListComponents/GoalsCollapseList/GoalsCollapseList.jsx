@@ -3,15 +3,17 @@ import Container from 'components/Container';
 import { PanelStyle, CollapseStyle } from './GoalsCollapseList.styled';
 import useGoalsCollapseList from './useGoalsCollapseList';
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+import GoalsTable from './GoalsTable/GoalsTable';
 
 const GoalsCollapseList = () => {
-  const color = 'data-green';
-  const { data } = useGoalsCollapseList();
+  const {
+    planTrainings,
+    activeTrainings,
+    finishedTrainings,
+    PLAN,
+    ACTIVE,
+    FINISHED,
+  } = useGoalsCollapseList();
 
   return (
     <Container>
@@ -22,15 +24,21 @@ const GoalsCollapseList = () => {
           <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
       >
-        <PanelStyle header="Тривають" key="valid" data-status="ongoing">
-          <p>{text}</p>
-        </PanelStyle>
-        <PanelStyle header="Заплановані" data-status="upcoming">
-          <p>{text}</p>
-        </PanelStyle>
-        <PanelStyle header="Завершені" data-status="finished">
-          <p>{text}</p>
-        </PanelStyle>
+        {!!activeTrainings.length && (
+          <PanelStyle header="Тривають" key="valid" data-status={ACTIVE}>
+            <GoalsTable type={ACTIVE} dataSource={activeTrainings} />
+          </PanelStyle>
+        )}
+        {!!planTrainings.length && (
+          <PanelStyle header="Заплановані" data-status={PLAN}>
+            <GoalsTable type={PLAN} dataSource={planTrainings} />
+          </PanelStyle>
+        )}
+        {!!finishedTrainings.length && (
+          <PanelStyle header="Завершені" data-status={FINISHED}>
+            <GoalsTable type={FINISHED} dataSource={finishedTrainings} />
+          </PanelStyle>
+        )}
       </CollapseStyle>
     </Container>
   );

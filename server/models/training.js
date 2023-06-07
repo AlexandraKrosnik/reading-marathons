@@ -42,6 +42,10 @@ const trainingSchema = Schema({
       },
     },
   ],
+  status: {
+    type: String,
+    require: true,
+  },
 });
 
 const joiSchema = Joi.object({
@@ -55,6 +59,7 @@ const joiSchema = Joi.object({
       pages: Joi.number().required(),
     }),
   }),
+  status: Joi.string().required(),
 });
 const joiSchemaAddTraining = Joi.object({
   start: Joi.date().required(),

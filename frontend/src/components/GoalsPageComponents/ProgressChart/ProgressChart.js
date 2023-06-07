@@ -34,7 +34,7 @@ export default function ProgressChart({ getPagesCount, getDatesBetweenDates }) {
   const id = '';
   const { data: trainings } = useGetTrainingByIdQuery(id);
 
-  const statisticsId = trainings?.training[0]?.statistics;
+  // const statisticsId = trainings?.training[0]?.statistics;
 
   // const planAmountOfPages = stats?.data?.statistic?.plan?.map(item => {
   //   return item.pages;

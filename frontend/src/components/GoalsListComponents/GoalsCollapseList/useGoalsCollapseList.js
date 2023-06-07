@@ -1,19 +1,63 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useGetTrainingsQuery } from 'redux/RTKQuery/booksApi';
+
 const useGoalsCollapseList = () => {
   const { data, isLoading, isError, isSuccess } = useGetTrainingsQuery();
-  const [planTrainings, setPlanTrainings] = useState();
-  const [activeTrainings, setActiveTrainings] = useState();
-  const [finishedTrainings, setFinishedTrainings] = useState();
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [planTrainings, setPlanTrainings] = useState([]);
+  const [activeTrainings, setActiveTrainings] = useState([]);
+  const [finishedTrainings, setFinishedTrainings] = useState([]);
+  const [searchPlanText, setSearchText] = useState('');
+  const [searchedPlanColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const PLAN = 'planned';
+  const ACTIVE = 'active';
+  const FINISHED = 'finished';
+
   useEffect(() => {
-    if (data) {
-      data.trainings.map(training => {});
+    const updateTrainingState = (prevState, training) => {
+      if (prevState?.find(({ tr }) => tr?._id === training?._id)) {
+        return prevState;
+      }
+      return [...prevState, { ...training, key: training?._id }];
+    };
+    if (data && isFirstRender) {
+      data.trainings.forEach(training => {
+        switch (training.status) {
+          case PLAN: {
+            setPlanTrainings(prevState =>
+              updateTrainingState(prevState, training)
+            );
+            break;
+          }
+          case ACTIVE: {
+            setActiveTrainings(prevState =>
+              updateTrainingState(prevState, training)
+            );
+            break;
+          }
+          case FINISHED: {
+            setFinishedTrainings(prevState =>
+              updateTrainingState(prevState, training)
+            );
+            break;
+          }
+          default:
+            break;
+        }
+      });
+      setIsFirstRender(false);
     }
-  }, []);
+  }, [data, isFirstRender]);
 
-  console.log(data);
-
-  return { data };
+  return {
+    planTrainings,
+    activeTrainings,
+    finishedTrainings,
+    PLAN,
+    ACTIVE,
+    FINISHED,
+  };
 };
 
 export default useGoalsCollapseList;

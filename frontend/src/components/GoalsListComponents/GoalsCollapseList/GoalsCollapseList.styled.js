@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { Collapse, theme } from 'antd';
+import { Collapse, Table, Progress, List } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
+
 const { Panel } = Collapse;
 
 export const CollapseStyle = styled(Collapse)`
@@ -13,6 +15,9 @@ export const CollapseStyle = styled(Collapse)`
 `;
 export const PanelStyle = styled(Panel)`
   margin-bottom: 24px;
+  &.ant-collapse-item-active > .ant-collapse-header {
+    padding-bottom: 0;
+  }
   &
     > .ant-collapse-header
     > .ant-collapse-expand-icon
@@ -29,17 +34,22 @@ export const PanelStyle = styled(Panel)`
     + .ant-collapse-header-text {
     border-radius: 5px 5px 0 0;
   }
-  &[data-status='ongoing'] {
+  &.ant-collapse-item-active
+    > .ant-collapse-content-active
+    > .ant-collapse-content-box {
+    padding-top: 0px;
+  }
+  &[data-status='active'] {
     & .ant-collapse-expand-icon + .ant-collapse-header-text {
       background-color: rgb(250 129 48 / 80%);
     }
   }
-  &[data-status='upcoming'] {
+  &[data-status='finished'] {
     & .ant-collapse-expand-icon + .ant-collapse-header-text {
       background-color: rgb(211, 211, 211);
     }
   }
-  &[data-status='finished'] {
+  &[data-status='planned'] {
     & .ant-collapse-expand-icon + .ant-collapse-header-text {
       background-color: rgb(107, 201, 80);
     }

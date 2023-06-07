@@ -1,5 +1,6 @@
 const { BadRequest } = require("http-errors");
 const { Training, Book } = require("../../models");
+const checkAndUpdateTrainingStatus = require("../../utils/checkAndUpdateTrainingStatus");
 
 const add = async (req, res) => {
   const { id } = req.user;
@@ -57,21 +58,20 @@ const add = async (req, res) => {
     return updateData;
   };
 
-  const training = await Training.create({
+  const newTraining = {
     user: id,
     title,
     start: startDate,
     finish: finishDate,
-
     books: booksForTraining,
-  });
+  };
+  newTraining.status = checkAndUpdateTrainingStatus(newTraining);
+
+  const training = await Training.create(newTraining);
   if (!training) {
     throw BadRequest(`Check the entered data!`);
   }
 
-  // const hgasd = booksFullInformation.map(({ _id }) => {
-  //   return updatedBookData(_id);
-  // });
   try {
     await Promise.all(
       booksFullInformation.map(async ({ _id }) => {

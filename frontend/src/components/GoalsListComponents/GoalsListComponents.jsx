@@ -5,8 +5,6 @@ const GoalsListComponents = () => {
     <>
       <GoalsHeader />
       <GoalsCollapseList />
-      <GoalsCollapseList />
-      <GoalsCollapseList />
     </>
   );
 };
