@@ -12,12 +12,12 @@ import Highlighter from 'react-highlight-words';
 import moment from 'moment';
 import TimerCell from '../TimerCell/TimerCell';
 import useGoalsCollapseList from '../useGoalsCollapseList';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import FilterDropdown from './FilterDropdown/FilterDropdown';
 
 const useGoalsTable = () => {
   const { PLAN, ACTIVE, FINISHED } = useGoalsCollapseList();
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState({});
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
@@ -93,6 +93,7 @@ const useGoalsTable = () => {
   };
 
   const renderBooks = (books, dataIndex) => {
+    console.log(searchText);
     return (
       <ListStyled
         dataSource={books}
@@ -108,13 +109,13 @@ const useGoalsTable = () => {
                 strokeWidth={10}
                 data-status="list"
               />
-              {searchedColumn === dataIndex || dataIndex === 'total' ? (
+              {searchText.books ? (
                 <Highlighter
                   highlightStyle={{
-                    backgroundColor: '#ffc069',
+                    backgroundColor: 'rgb(243 216 95)',
                     padding: 0,
                   }}
-                  searchWords={[searchText]}
+                  searchWords={[searchText.books]}
                   autoEscape
                   textToHighlight={book.title ? book.title.toString() : ''}
                 />
@@ -128,15 +129,15 @@ const useGoalsTable = () => {
     );
   };
 
-  const renderTitle = (text, dataIndex) => {
-    if (searchedColumn === dataIndex || dataIndex === 'total') {
+  const renderTitle = text => {
+    if (searchText.title) {
       return (
         <Highlighter
           highlightStyle={{
             backgroundColor: '#ffc069',
             padding: 0,
           }}
-          searchWords={[searchText]}
+          searchWords={[searchText.title]}
           autoEscape
           textToHighlight={text ? text.toString() : ''}
         />
@@ -145,30 +146,43 @@ const useGoalsTable = () => {
       return text;
     }
   };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
+    setSearchText(prevState => ({
+      ...prevState,
+      [dataIndex]: selectedKeys[0],
+    }));
+
     setSearchedColumn(dataIndex);
+    confirm();
   };
 
-  const handleReset = (clearFilters, confirm) => {
+  const handleReset = (clearFilters, confirm, dataIndex) => {
     clearFilters();
-    setSearchText('');
+
+    setSearchText(prevState => ({
+      ...prevState,
+      [dataIndex]: '',
+    }));
+    setSearchedColumn('');
     confirm();
+  };
+  const filerTitle = (value, record, dataIndex) =>
+    record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
+
+  const filterBooks = (value, record, dataIndex) => {
+    const isTitleIncludeValue = record[dataIndex].map(({ book }) =>
+      book.title.toString().toLowerCase().includes(value.toLowerCase())
+    );
+    return isTitleIncludeValue.includes(true);
   };
 
   const onFilter = (value, record, dataIndex) => {
     if (dataIndex === 'title') {
-      return record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes(value.toLowerCase());
+      return filerTitle(value, record, dataIndex);
     }
     if (dataIndex === 'books') {
-      const isTitleIncludeValue = record[dataIndex].map(({ book }) =>
-        book.title.toString().toLowerCase().includes(value.toLowerCase())
-      );
-      return isTitleIncludeValue.includes(true);
+      return filterBooks(value, record, dataIndex);
     }
   };
 
@@ -205,10 +219,10 @@ const useGoalsTable = () => {
     },
     render: text => {
       if (dataIndex === 'title') {
-        return renderTitle(text, dataIndex);
+        return renderTitle(text);
       }
       if (dataIndex === 'books') {
-        return renderBooks(text, dataIndex);
+        return renderBooks(text);
       }
     },
   });

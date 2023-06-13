@@ -44,7 +44,9 @@ const FilterDropdown = forwardRef(
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters, confirm)}
+            onClick={() =>
+              clearFilters && handleReset(clearFilters, confirm, dataIndex)
+            }
             size="small"
           >
             Reset

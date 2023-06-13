@@ -16,7 +16,8 @@ const useGoalsCollapseList = () => {
 
   useEffect(() => {
     const updateTrainingState = (prevState, training) => {
-      if (prevState?.find(({ tr }) => tr?._id === training?._id)) {
+      const isInclude = prevState.find(tr => tr?._id === training?._id);
+      if (isInclude) {
         return prevState;
       }
       return [...prevState, { ...training, key: training?._id }];

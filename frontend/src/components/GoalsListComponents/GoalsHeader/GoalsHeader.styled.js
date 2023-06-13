@@ -10,21 +10,38 @@ export const HeaderBackground = styled.div`
   width: 100%;
   height: 40px;
   /* margin-top: 1px; */
-  background-color: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  /* background-color: #ffffff; */
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
 `;
 
 export const ContainerStyled = styled(Container)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 100%;
   padding: 0;
 `;
-
-export const SearchStyled = styled(Search)`
-  border-bottom: 1px solid #d9d9d9;
+export const SearchStyled = styled.div`
+  display: flex;
+  align-items: center;
   width: 60%;
+  height: 100%;
+  /* border-bottom: 1px solid #d9d9d9; */
+  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+    width: 50%;
+  }
+  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
+    width: 40%;
+  }
+`;
+
+export const SearchInputStyled = styled(Search)`
+  width: 90%;
+
+  border-bottom: 1px solid #d9d9d9;
+  & .ant-input-search-button {
+    height: 30px;
+  }
   &:focus,
   &:hover {
     border-bottom-color: var(--ant-primary-5);
@@ -42,12 +59,12 @@ export const SearchStyled = styled(Search)`
   & .ant-input-group-addon .ant-btn {
     border: none;
   }
-  @media (min-width: ${p => p.theme.breakpoints.tablet}) {
+  /* @media (min-width: ${p => p.theme.breakpoints.tablet}) {
     width: 50%;
   }
   @media (min-width: ${p => p.theme.breakpoints.desktop}) {
     width: 40%;
-  }
+  } */
 `;
 
 export const ButtonStyled = styled(Button)`

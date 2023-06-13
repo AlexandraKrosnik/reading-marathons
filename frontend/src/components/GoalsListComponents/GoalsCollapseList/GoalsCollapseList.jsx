@@ -5,7 +5,7 @@ import useGoalsCollapseList from './useGoalsCollapseList';
 
 import GoalsTable from './GoalsTable/GoalsTable';
 
-const GoalsCollapseList = () => {
+const GoalsCollapseList = ({ searchTotalFilter }) => {
   const {
     planTrainings,
     activeTrainings,
@@ -26,17 +26,29 @@ const GoalsCollapseList = () => {
       >
         {!!activeTrainings.length && (
           <PanelStyle header="Тривають" key="valid" data-status={ACTIVE}>
-            <GoalsTable type={ACTIVE} dataSource={activeTrainings} />
+            <GoalsTable
+              type={ACTIVE}
+              dataSource={activeTrainings}
+              searchTotalFilter={searchTotalFilter}
+            />
           </PanelStyle>
         )}
         {!!planTrainings.length && (
           <PanelStyle header="Заплановані" data-status={PLAN}>
-            <GoalsTable type={PLAN} dataSource={planTrainings} />
+            <GoalsTable
+              type={PLAN}
+              dataSource={planTrainings}
+              searchTotalFilter={searchTotalFilter}
+            />
           </PanelStyle>
         )}
         {!!finishedTrainings.length && (
           <PanelStyle header="Завершені" data-status={FINISHED}>
-            <GoalsTable type={FINISHED} dataSource={finishedTrainings} />
+            <GoalsTable
+              type={FINISHED}
+              dataSource={finishedTrainings}
+              searchTotalFilter={searchTotalFilter}
+            />
           </PanelStyle>
         )}
       </CollapseStyle>
