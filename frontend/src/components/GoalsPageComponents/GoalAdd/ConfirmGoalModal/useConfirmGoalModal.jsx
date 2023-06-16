@@ -194,7 +194,6 @@ const useConfirmGoalModal = (
     loading,
     showConfirm,
     isBooks,
-    onCancelButton,
     onOkButton,
     currentStep,
     nextStep,

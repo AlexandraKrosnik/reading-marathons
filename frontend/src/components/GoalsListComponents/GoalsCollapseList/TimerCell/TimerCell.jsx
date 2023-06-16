@@ -1,7 +1,11 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { ClockCircleOutlined, LoadingOutlined } from '@ant-design/icons';
-
+import { LoadingOutlined } from '@ant-design/icons';
+import {
+  TimerCellStyled,
+  TimerCellTextStyled,
+  ClockCircleOutlinedStyled,
+} from './TimerCell.styled';
 const TimerCell = ({ startDateTime }) => {
   const [timeDiff, setTimeDiff] = useState();
   useEffect(() => {
@@ -12,24 +16,29 @@ const TimerCell = ({ startDateTime }) => {
       const days = duration.days();
       const hours = duration.hours();
       const minutes = duration.minutes();
-      const formattedTimeDiff = ` ${days}днів ${hours}год ${minutes}хв`;
-      setTimeDiff(formattedTimeDiff);
-    }, 1000); // оновлення кожну секунду
+
+      setTimeDiff([days, hours, minutes]);
+    }, 1000);
 
     return () => {
-      clearInterval(timer); // зупинка таймера при розмонтуванні компонента
+      clearInterval(timer);
     };
   }, [startDateTime]);
+
   return (
-    <>
+    <TimerCellStyled>
+      {!timeDiff && <LoadingOutlined />}
       {timeDiff && (
         <>
-          <ClockCircleOutlined />
-          <span>{timeDiff}</span>
+          <ClockCircleOutlinedStyled />
+          <TimerCellTextStyled>
+            <span>{timeDiff[0]}днів</span>
+            <span>{timeDiff[1]}год</span>
+            <span>{timeDiff[2]}хв</span>
+          </TimerCellTextStyled>
         </>
       )}
-      {!timeDiff && <LoadingOutlined />}
-    </>
+    </TimerCellStyled>
   );
 };
 

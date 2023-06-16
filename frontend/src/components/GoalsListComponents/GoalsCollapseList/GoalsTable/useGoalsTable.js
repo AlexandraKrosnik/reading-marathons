@@ -1,39 +1,29 @@
-import {
-  BookOutlinedStyled,
-  ProgressStyled,
-  StatusColumnStyled,
-  ListStyled,
-  ListItemStyled,
-} from './GoalsTable.styled';
-
+import { useState, useRef } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-
 import Highlighter from 'react-highlight-words';
 import moment from 'moment';
 import TimerCell from '../TimerCell/TimerCell';
 import useGoalsCollapseList from '../useGoalsCollapseList';
-import { useState, useRef } from 'react';
 import FilterDropdown from './FilterDropdown/FilterDropdown';
+import {
+  BookOutlinedStyled,
+  ProgressStyled,
+  StatusColumnStyled,
+  BooksListStyled,
+  BooksListItemStyled,
+  BooksTitleStyled,
+  BooksDateStyled,
+} from './GoalsTable.styled';
 
 const useGoalsTable = () => {
   const { PLAN, ACTIVE, FINISHED } = useGoalsCollapseList();
   const [searchText, setSearchText] = useState({});
-  const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
-  const renderDate = text => {
-    const formattedDate = moment(text).format('DD.MM.YYYY ');
-    const formattedTime = moment(text).format('HH:mm');
-    return (
-      <span>
-        {formattedDate} | {formattedTime}
-      </span>
-    );
-  };
   const getPercent = (smallerNumber, largerNumber, roundingThreshold = 0) =>
     ((smallerNumber / largerNumber) * 100).toFixed(roundingThreshold);
 
-  const renderStatus = (text, record, index) => {
+  const getGoalProgressPercentage = record => {
     let countBooksPages = 0;
     let countBooksLeftPages = 0;
 
@@ -41,7 +31,21 @@ const useGoalsTable = () => {
       countBooksPages += book.pages;
       countBooksLeftPages += book.leftPages;
     });
-    const percent = getPercent(countBooksLeftPages, countBooksPages, 1);
+    return getPercent(countBooksLeftPages, countBooksPages, 1);
+  };
+
+  const renderDate = text => {
+    const formattedDate = moment(text).format('DD.MM.YYYY ');
+    const formattedTime = moment(text).format('HH:mm');
+    return (
+      <BooksDateStyled>
+        {formattedDate} | {formattedTime}
+      </BooksDateStyled>
+    );
+  };
+
+  const renderStatus = (text, record, index) => {
+    const percent = getGoalProgressPercentage(record);
 
     switch (text) {
       case PLAN: {
@@ -93,14 +97,13 @@ const useGoalsTable = () => {
   };
 
   const renderBooks = (books, dataIndex) => {
-    console.log(searchText);
     return (
-      <ListStyled
+      <BooksListStyled
         dataSource={books}
         renderItem={({ book }) => {
           const percent = getPercent(book.leftPages, book.pages, 0);
           return (
-            <ListItemStyled>
+            <BooksListItemStyled>
               <ProgressStyled
                 type="circle"
                 percent={percent}
@@ -122,7 +125,7 @@ const useGoalsTable = () => {
               ) : (
                 book.title
               )}
-            </ListItemStyled>
+            </BooksListItemStyled>
           );
         }}
       />
@@ -130,21 +133,23 @@ const useGoalsTable = () => {
   };
 
   const renderTitle = text => {
-    if (searchText.title) {
-      return (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[searchText.title]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      );
-    } else {
-      return text;
-    }
+    return (
+      <BooksTitleStyled>
+        {searchText.title ? (
+          <Highlighter
+            highlightStyle={{
+              backgroundColor: '#ffc069',
+              padding: 0,
+            }}
+            searchWords={[searchText.title]}
+            autoEscape
+            textToHighlight={text ? text.toString() : ''}
+          />
+        ) : (
+          text
+        )}
+      </BooksTitleStyled>
+    );
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -153,18 +158,16 @@ const useGoalsTable = () => {
       [dataIndex]: selectedKeys[0],
     }));
 
-    setSearchedColumn(dataIndex);
     confirm();
   };
 
   const handleReset = (clearFilters, confirm, dataIndex) => {
     clearFilters();
-
     setSearchText(prevState => ({
       ...prevState,
       [dataIndex]: '',
     }));
-    setSearchedColumn('');
+
     confirm();
   };
   const filerTitle = (value, record, dataIndex) =>

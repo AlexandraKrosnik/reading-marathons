@@ -7,9 +7,7 @@ const useGoalsCollapseList = () => {
   const [planTrainings, setPlanTrainings] = useState([]);
   const [activeTrainings, setActiveTrainings] = useState([]);
   const [finishedTrainings, setFinishedTrainings] = useState([]);
-  const [searchPlanText, setSearchText] = useState('');
-  const [searchedPlanColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null);
+
   const PLAN = 'planned';
   const ACTIVE = 'active';
   const FINISHED = 'finished';

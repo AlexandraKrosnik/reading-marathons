@@ -5,7 +5,7 @@ import useGoalsCollapseList from './useGoalsCollapseList';
 
 import GoalsTable from './GoalsTable/GoalsTable';
 
-const GoalsCollapseList = ({ searchTotalFilter }) => {
+const GoalsCollapseList = () => {
   const {
     planTrainings,
     activeTrainings,
@@ -19,36 +19,24 @@ const GoalsCollapseList = ({ searchTotalFilter }) => {
     <Container>
       <CollapseStyle
         bordered={false}
-        defaultActiveKey={['valid']}
+        defaultActiveKey={['active', 'plan']}
         expandIcon={({ isActive }) => (
           <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
       >
         {!!activeTrainings.length && (
-          <PanelStyle header="Тривають" key="valid" data-status={ACTIVE}>
-            <GoalsTable
-              type={ACTIVE}
-              dataSource={activeTrainings}
-              searchTotalFilter={searchTotalFilter}
-            />
+          <PanelStyle header="Тривають" key="active" data-status={ACTIVE}>
+            <GoalsTable type={ACTIVE} dataSource={activeTrainings} />
           </PanelStyle>
         )}
         {!!planTrainings.length && (
-          <PanelStyle header="Заплановані" data-status={PLAN}>
-            <GoalsTable
-              type={PLAN}
-              dataSource={planTrainings}
-              searchTotalFilter={searchTotalFilter}
-            />
+          <PanelStyle header="Заплановані" key="plan" data-status={PLAN}>
+            <GoalsTable type={PLAN} dataSource={planTrainings} />
           </PanelStyle>
         )}
         {!!finishedTrainings.length && (
           <PanelStyle header="Завершені" data-status={FINISHED}>
-            <GoalsTable
-              type={FINISHED}
-              dataSource={finishedTrainings}
-              searchTotalFilter={searchTotalFilter}
-            />
+            <GoalsTable type={FINISHED} dataSource={finishedTrainings} />
           </PanelStyle>
         )}
       </CollapseStyle>

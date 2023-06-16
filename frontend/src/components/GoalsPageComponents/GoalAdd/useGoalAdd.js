@@ -298,7 +298,6 @@ const useGoalAdd = () => {
       title: titleGoal,
       books: booksForTable.map(book => book._id),
     };
-    console.log(data);
 
     if (booksToRestartReading?.length !== 0) {
       data.booksToRestartReading = booksToRestartReading.map(book => book._id);
@@ -341,7 +340,6 @@ const useGoalAdd = () => {
     booksToConfirm,
     onAddGoal,
     setConfirmModalVisible,
-    isAddLoading,
     titleGoal,
     setTitleGoal,
   };

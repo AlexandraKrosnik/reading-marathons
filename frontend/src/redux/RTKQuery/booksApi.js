@@ -18,7 +18,7 @@ export const booksApi = createApi({
     }),
     deleteBook: builder.mutation({
       query: id => ({ url: `/books/${id}`, method: 'DELETE' }),
-      invalidatesTags: ['Books'],
+      invalidatesTags: ['Books', 'Trainings', 'TrainingById'],
     }),
     getBookById: builder.query({
       query: id => ({ url: `/books/${id}`, method: 'GET' }),

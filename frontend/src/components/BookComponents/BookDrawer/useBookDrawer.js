@@ -45,7 +45,8 @@ const useBookDrawer = () => {
   }, [navigate, tabSearch]);
   const showPromiseConfirm = () => {
     confirm({
-      title: `Ви бажаєте видалити книгу "${data.book.title}"?`,
+      title: `Ви бажаєте видалити книгу "${data.book.title}"? `,
+      content: 'Вона також буде видалена з усіх тренувань.',
       icon: <ExclamationCircleFilled />,
       okText: 'Видалити',
       cancelText: 'Відмінити',

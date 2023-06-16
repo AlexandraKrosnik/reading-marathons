@@ -1,10 +1,9 @@
-import { Button, Checkbox, Dropdown } from 'antd';
+import { Checkbox } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import {
   DropdownStyled,
   FilterIconStyled,
 } from './FilterTotalSearchDropdown.styled';
-import { useEffect, useState } from 'react';
 const FilterTotalSearchDropdown = ({ filterParams, setFilterParams }) => {
   const onCheckboxChange = e => {
     setFilterParams(prevState => ({

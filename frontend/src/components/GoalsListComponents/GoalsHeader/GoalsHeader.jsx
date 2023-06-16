@@ -1,17 +1,13 @@
 import { useMatchMedia } from 'hooks';
-import React, { useState } from 'react';
 import {
   HeaderBackground,
-  SearchInputStyled,
   ContainerStyled,
   ButtonStyled,
-  SearchStyled,
 } from './GoalsHeader.styled';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import FilterTotalSearchDropdown from './FilterTotalSearchDropdown/FilterTotalSearchDropdown';
 
-const GoalsHeader = ({ handleSearch }) => {
+const GoalsHeader = () => {
   const { isMobile } = useMatchMedia();
 
   const navigate = useNavigate();
