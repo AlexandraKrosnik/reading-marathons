@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from 'redux/RTKQuery/booksApi';
 import BookList from './BookList/BookList';
 import { useSearchParams, useLocation } from 'react-router-dom';
+import EmtpyLibraryText from 'components/modals/EmtpyLibraryText/EmptyLibraryText';
 
 const useLibraryComponent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +40,7 @@ const useLibraryComponent = () => {
           now.push(item);
         }
       });
+
       setPlanBooks(plan);
       setAlreadyBooks(already);
       setNowBooks(now);
@@ -62,7 +64,12 @@ const useLibraryComponent = () => {
       {
         label: 'Маю намір прочитати',
         key: params[0],
-        children: <BookList data={planBooks} />,
+        children:
+          planBooks.length === 0 ? (
+            <EmtpyLibraryText />
+          ) : (
+            <BookList data={planBooks} />
+          ),
       },
 
       {
@@ -81,7 +88,6 @@ const useLibraryComponent = () => {
   }, [alreadyBooks, nowBooks, planBooks, params]);
 
   const onTabChange = key => {
-    // setDefaultTabKey(key);
     searchParams.set('tab', key);
     setSearchParams(searchParams);
   };

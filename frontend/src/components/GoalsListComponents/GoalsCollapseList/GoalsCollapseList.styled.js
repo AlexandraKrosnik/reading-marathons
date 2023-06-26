@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Collapse, Table, Progress, List } from 'antd';
-import { BookOutlined } from '@ant-design/icons';
+import { Collapse } from 'antd';
 
 const { Panel } = Collapse;
 

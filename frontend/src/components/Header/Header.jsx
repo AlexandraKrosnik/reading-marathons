@@ -20,7 +20,6 @@ import { useMatchMedia } from 'hooks';
 import Modal from 'components/modals/Modal/Modal';
 import ExitModal from 'components/modals/ExitModal';
 import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);

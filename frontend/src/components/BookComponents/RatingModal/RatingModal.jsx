@@ -48,20 +48,10 @@ const RatingModal = () => {
                 onValuesChange={onValuesChange}
               >
                 <FormItem name={Fields.rating.name} label={Fields.rating.label}>
-                  <Rate
-                    style={{ width: '120px', fontSize: '17px' }}
-                    onChange={value => {
-                      // setRating(value);
-                    }}
-                  />
+                  <Rate style={{ width: '120px', fontSize: '17px' }} />
                 </FormItem>
                 <FormItem name={Fields.resume.name} label={Fields.resume.label}>
-                  <StyledTextArea
-                    onChange={e => {
-                      // setResume(e.currentTarget.value);
-                    }}
-                    autoSize={{ maxRows: 7 }}
-                  />
+                  <StyledTextArea autoSize={{ maxRows: 7 }} />
                 </FormItem>
                 <StyledBox>
                   <StyledRatingButton onClick={onCloseModal}>

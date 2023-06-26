@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ClockCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined } from '@ant-design/icons';
 export const TimerCellStyled = styled.div`
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@ export const TimerCellStyled = styled.div`
 export const TimerCellTextStyled = styled.div`
   display: flex;
   margin-left: 5px;
-  /* color: var(--ant-primary-10); */
+
   @media (max-width: ${p => p.theme.breakpoints.desktop}) {
     margin-left: 10px;
     flex-direction: column;

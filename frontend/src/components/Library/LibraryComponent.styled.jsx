@@ -6,18 +6,6 @@ export const StyledSection = styled.section`
   font-family: 'Montserrat';
 `;
 
-// export const StyledButton = styled(Button)`
-//   display: block;
-//   min-width: 200px;
-//   min-height: 40px;
-//   margin-left: auto;
-//   margin-right: auto;
-//   margin-top: 35px;
-
-//   font-weight: 600;
-//   font-size: 16px;
-//   line-height: 1.25;
-// `;
 export const StyledTabs = styled(Tabs)`
   @media (max-width: ${p => p.theme.breakpoints.tablet}) {
     .ant-tabs-tab {
@@ -71,12 +59,3 @@ export const TextStyled = styled.span`
 
   color: ${p => p.theme.colors.secondaryFontColor};
 `;
-
-// export const CollapseStyled = styled(Collapse)`
-//   border: none;
-//   background-color: inherit;
-//   .ant-collapse-item:last-child > .ant-collapse-content {
-//     background-color: inherit;
-//     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-//   }
-// `;

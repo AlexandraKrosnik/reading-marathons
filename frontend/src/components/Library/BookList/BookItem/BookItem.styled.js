@@ -29,6 +29,7 @@ export const StyledBadge = styled(Badge)`
   display: flex;
 
   padding: 20px 10px 15px 8px;
+  height: 100%;
 `;
 
 export const StyledIconBox = styled.div`
@@ -73,8 +74,8 @@ export const StyledProgress = styled(Progress)`
   }
   .ant-progress-text {
     width: auto;
-    font-size: 12px;
-    margin-left: 16px;
+    font-size: 10px;
+    margin-left: 12px;
   }
 `;
 export const StyledLS = styled.div`

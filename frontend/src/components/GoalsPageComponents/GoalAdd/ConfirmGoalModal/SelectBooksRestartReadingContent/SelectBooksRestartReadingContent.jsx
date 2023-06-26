@@ -6,7 +6,7 @@ import {
   SelectBooksStyled,
   SelectBooksTitleStyled,
 } from './SelectBooksRestartReadingContent.styled';
-
+import PropTypes from 'prop-types';
 import useSelectBooksRestartReadingContent from './useSelectBooksRestartReadingContent';
 const SelectBooksRestartReadingContent = ({
   isMobile,
@@ -54,4 +54,10 @@ const SelectBooksRestartReadingContent = ({
   );
 };
 
+SelectBooksRestartReadingContent.propTypes = {
+  books: PropTypes.array,
+  selectedBooks: PropTypes.array,
+  isMobile: PropTypes.bool.isRequired,
+  setSelectedBooks: PropTypes.func,
+};
 export default SelectBooksRestartReadingContent;

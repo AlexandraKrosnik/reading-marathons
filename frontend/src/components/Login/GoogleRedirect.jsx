@@ -23,8 +23,6 @@ const GoogleRedirect = () => {
     dispatch(authOperations.authGoogle({ token, user: { email, name } }));
   }, [dispatch, email, name, token]);
 
-  // dispatch(authOperations.fetchCurrentUser());
-
   return <p>Google login succeeded</p>;
 };
 

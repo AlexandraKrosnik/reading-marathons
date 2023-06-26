@@ -37,16 +37,13 @@ export const TableStyled = styled(Table)`
   @media (max-width: ${p => p.theme.breakpoints.desktop}) {
     & .ant-table-tbody > tr > td,
     & .ant-table-thead > tr > th {
-      /* padding: 5px 10px; */
       padding: 7px 10px;
     }
     & .ant-table-tbody > tr > td {
       font-size: 10px;
-      /* padding: 10px 7px; */
     }
     & .ant-table-thead > tr > th {
       font-size: 12px;
-      /* padding: 5px 10px; */
     }
     & .ant-table-tbody > tr > td:first-child {
       width: 40px;
@@ -99,6 +96,11 @@ export const ProgressStyled = styled(Progress)`
   }
   .ant-progress-text {
   }
+  @media (max-width: ${p => p.theme.breakpoints.desktop}) {
+    &[data-status='active'] > .ant-progress-text {
+      font-size: 10px;
+    }
+  }
 `;
 
 export const BooksListStyled = styled(List)`
@@ -120,7 +122,7 @@ export const BooksListStyled = styled(List)`
   & .ant-list-items {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     height: 90px;
     max-height: 100px;
   }
@@ -151,14 +153,6 @@ export const BooksDateStyled = styled.span`
   }
 `;
 
-export const FilterStyled = styled.div`
-  /* @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    width: 80%;
-  } */
-`;
+export const FilterStyled = styled.div``;
 
-export const FilterSpaceStyled = styled(Space)`
-  /* @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    width: 80%;
-  } */
-`;
+export const FilterSpaceStyled = styled(Space)``;

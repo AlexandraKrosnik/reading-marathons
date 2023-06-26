@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetTrainingsQuery } from 'redux/RTKQuery/booksApi';
 
 const useGoalsCollapseList = () => {
@@ -56,6 +56,7 @@ const useGoalsCollapseList = () => {
     PLAN,
     ACTIVE,
     FINISHED,
+    data,
   };
 };
 

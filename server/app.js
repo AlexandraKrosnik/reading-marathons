@@ -2,14 +2,13 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-// const path = require("path");
+
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 
 const authRouter = require("./routes/api/auth");
 const bookRouter = require("./routes/api/books");
 const trainingRouter = require("./routes/api/trainings");
-const statisticRouter = require("./routes/api/statistics");
 
 const app = express();
 
@@ -24,11 +23,6 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/books", bookRouter);
 app.use("/api/trainings", trainingRouter);
-app.use("/api/statistics", statisticRouter);
-
-// app.use("/link", (_, res) => {
-//   res.sendFile(path.join(__dirname, "./public/link.html"));
-// });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

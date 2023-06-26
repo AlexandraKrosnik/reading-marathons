@@ -3,39 +3,13 @@ const checkAndUpdateTrainingStatus = require("../../utils/checkAndUpdateTraining
 const { InternalServerError } = require("http-errors");
 const getAll = async (req, res) => {
   const { id } = req.user;
-  const trainings = await Training.find({ user: id }).populate("books.book");
+  const trainings = await Training.find({ user: id }).populate(
+    "statistics.book"
+  );
 
-  // const updatedBooks = trainings.map((training) => {
-  //   const updatedTrainingStatus = checkAndUpdateTrainingStatus(training);
-  //   if (updatedTrainingStatus === "finished") {
-  //     return Promise.all(
-  //       training.books.map(async ({ book }) => {
-  //         console.log("book", book);
-  //         const updatedBook = await Book.findByIdAndUpdate(
-  //           book._id,
-  //           {
-  //             inTraining: false,
-  //           },
-  //           {
-  //             new: true,
-  //           }
-  //         );
-  //         console.log(updatedBook);
-  //         if (!updatedBook) {
-  //           throw new InternalServerError(
-  //             `Something went wrong. Check the entered data!`
-  //           );
-  //         }
-  //         return updatedBook;
-  //       })
-  //     );
-  //   }
-  //   return training;
-  // });
   const updatedBooks = (training) => {
     return Promise.all(
-      training.books.map(async ({ book }) => {
-        console.log("book", book);
+      training.statistics.map(async ({ book }) => {
         const updatedBook = await Book.findByIdAndUpdate(
           book._id,
           {
@@ -45,7 +19,7 @@ const getAll = async (req, res) => {
             new: true,
           }
         );
-        console.log(updatedBook);
+
         if (!updatedBook) {
           throw new InternalServerError(
             `Something went wrong. Check the entered data!`
@@ -55,6 +29,7 @@ const getAll = async (req, res) => {
       })
     );
   };
+
   const updatedTrainings = await Promise.all(
     trainings.map(async (training) => {
       const updatedTrainingStatus = checkAndUpdateTrainingStatus(training);

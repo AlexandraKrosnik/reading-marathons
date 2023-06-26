@@ -4,6 +4,7 @@ import { PanelStyle, CollapseStyle } from './GoalsCollapseList.styled';
 import useGoalsCollapseList from './useGoalsCollapseList';
 
 import GoalsTable from './GoalsTable/GoalsTable';
+import { Empty } from 'antd';
 
 const GoalsCollapseList = () => {
   const {
@@ -13,10 +14,21 @@ const GoalsCollapseList = () => {
     PLAN,
     ACTIVE,
     FINISHED,
+    data,
   } = useGoalsCollapseList();
 
   return (
     <Container>
+      {data?.trainings.length === 0 && (
+        <Empty
+          description={
+            <span>
+              Тут поки пусто.
+              <br /> Додай свою першу ціль!
+            </span>
+          }
+        />
+      )}
       <CollapseStyle
         bordered={false}
         defaultActiveKey={['active', 'plan']}

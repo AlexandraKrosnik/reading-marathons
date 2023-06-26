@@ -19,12 +19,24 @@ const trainingSchema = Schema({
     type: String,
     require: true,
   },
-  books: [
+  statistics: [
     {
       book: {
         type: Schema.Types.ObjectId,
         ref: "book",
         require: true,
+      },
+      statisticsPages: {
+        type: {
+          readPages: {
+            type: Number,
+            require: [true, "Please, write pages you have read!"],
+          },
+          initialPage: {
+            type: Number,
+            require: [true, "Please, write initial page!"],
+          },
+        },
       },
       result: {
         type: [
@@ -52,13 +64,25 @@ const joiSchema = Joi.object({
   start: Joi.date().required(),
   finish: Joi.date().required(),
   title: Joi.string().required(),
-  books: Joi.array().items({
+
+  statistics: Joi.object({
     book: Joi.string(),
+    statisticsPages: Joi.object({
+      readPages: Joi.number().required().messages({
+        "any.required": "Please, write pages you have read!",
+        "number.base": "Please provide a valid number for readPages",
+      }),
+      initialPage: Joi.number().required().messages({
+        "any.required": "Please, write initial page!",
+        "number.base": "Please provide a valid number for initialPage",
+      }),
+    }),
     result: Joi.array().items({
       date: Joi.date().required(),
       pages: Joi.number().required(),
     }),
   }),
+
   status: Joi.string().required(),
 });
 const joiSchemaAddTraining = Joi.object({
@@ -69,6 +93,17 @@ const joiSchemaAddTraining = Joi.object({
   booksToRestartReading: Joi.array().items(Joi.string()),
 });
 
+const joiSchemaAddStatistic = Joi.object({
+  book: Joi.string().required(),
+  date: Joi.date().required(),
+  pages: Joi.number().required(),
+});
+
 const Training = model("training", trainingSchema);
 
-module.exports = { Training, joiSchema, joiSchemaAddTraining };
+module.exports = {
+  Training,
+  joiSchema,
+  joiSchemaAddTraining,
+  joiSchemaAddStatistic,
+};

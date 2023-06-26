@@ -66,6 +66,7 @@ const LoginForm = () => {
         { type: 'Statistics' },
       ])
     );
+
     dispatch(authOperations.logIn(values));
 
     isLoggedIn && actions.resetForm();

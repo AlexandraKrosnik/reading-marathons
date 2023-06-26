@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import openNotificationWithIcon from 'components/Notification';
 import { useAddTrainingMutation } from 'redux/RTKQuery/booksApi';
 import { QuestionOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 const { confirm } = Modal;
 
@@ -19,6 +20,7 @@ const useGoalAdd = () => {
   const [booksToConfirm, setBooksToConfirm] = useState();
   const [isAddLoading, setIsAddLoading] = useState(false);
   const [titleGoal, setTitleGoal] = useState();
+  const navigate = useNavigate();
 
   const [isFirstRender, setIsFirstRender] = useState(true);
   const localStorageStartDate = 'startDate';
@@ -235,7 +237,7 @@ const useGoalAdd = () => {
     setSelectBooksToLocalStorage(sortForSelect);
   };
 
-  const numberOfDays = useMemo(() => {
+  const numberOfDays = () => {
     if (start && finish) {
       let date1 = new Date(start);
       let date2 = new Date(finish);
@@ -245,13 +247,13 @@ const useGoalAdd = () => {
 
       return roundedDiffInDays;
     }
-  }, [finish, start]);
+  };
 
-  const numberOfBooks = useMemo(() => {
+  const numberOfBooks = () => {
     return booksForTable.length;
-  }, [booksForTable]);
+  };
 
-  const getPagesCount = useMemo(() => {
+  const getPagesCount = () => {
     if (booksForTable.length !== 0) {
       return booksForTable.reduce((accumulator, item) => {
         if (item.leftPages !== 0) {
@@ -260,9 +262,9 @@ const useGoalAdd = () => {
         return (accumulator += item.pages);
       }, 0);
     }
-  }, [booksForTable]);
+  };
 
-  const getDateCountBetweenDates = useMemo(() => {
+  const getDateCountBetweenDates = () => {
     if (!!start && !!finish) {
       const dates = [];
       let startDate = new Date(start);
@@ -274,10 +276,12 @@ const useGoalAdd = () => {
 
       return dates;
     }
-  }, [finish, start]);
+  };
 
   const filterBooksInReading = useMemo(() => {
-    return booksForTable.filter(book => book.leftPages > 0);
+    return booksForTable.filter(
+      book => book.leftPages > 0 && book.leftPages !== book.pages
+    );
   }, [booksForTable]);
 
   const initiateBookReadingChallenge = () => {
@@ -309,6 +313,8 @@ const useGoalAdd = () => {
       openNotificationWithIcon('error', result.error.data.message);
     } else {
       openNotificationWithIcon('success', `"${titleGoal}" успішно створено!`);
+
+      navigate({ pathname: `/goals/${result.data.training._id}` });
     }
     removeFinishFromLocalStorage();
     removeStartFromLocalStorage();

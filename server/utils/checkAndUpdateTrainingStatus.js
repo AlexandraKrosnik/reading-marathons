@@ -4,6 +4,17 @@ const checkAndUpdateTrainingStatus = (training) => {
   }
   const currentDate = new Date();
 
+  const isAllFinishedBooks = training.statistics.filter((statistic) => {
+    // console.log(statistic);
+    return (
+      Number(statistic.book.pages) !==
+      Number(statistic.statisticsPages.readPages)
+    );
+  });
+  if (isAllFinishedBooks.length === 0) {
+    return "finished";
+  }
+
   // Перевіряємо дати початку і закінчення тренування
   if (currentDate >= training.start && currentDate <= training.finish) {
     // Тренування є активним

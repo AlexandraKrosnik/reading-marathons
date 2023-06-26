@@ -40,11 +40,6 @@ const add = async (req, res) => {
     throw BadRequest(`The final date must be later than the start date! `);
   }
 
-  const booksForTraining = booksFullInformation.map((book) => ({
-    book: book._id,
-    result: [],
-  }));
-
   const updatedBookData = (bookId) => {
     const updateData = { inTraining: true, status: "now" };
     if (booksToRestartReading && booksToRestartReading?.length !== 0) {
@@ -55,15 +50,32 @@ const add = async (req, res) => {
         updateData.leftPages = 0;
       }
     }
+    const findBook = books.find((_id) => checkBooks(_id, bookId.toString()));
+    if (findBook.pages === findBook.leftPages) {
+      updateData.leftPages = 0;
+    }
+
     return updateData;
   };
+
+  const booksForTraining = booksFullInformation.map((book) => {
+    console.log(updatedBookData(book._id));
+    return {
+      book: book._id,
+      statisticsPages: {
+        readPages: updatedBookData(book._id).leftPages ?? book.leftPages,
+        initialPage: updatedBookData(book._id).leftPages ?? book.leftPages,
+      },
+      result: [],
+    };
+  });
 
   const newTraining = {
     user: id,
     title,
     start: startDate,
     finish: finishDate,
-    books: booksForTraining,
+    statistics: booksForTraining,
   };
   newTraining.status = checkAndUpdateTrainingStatus(newTraining);
 

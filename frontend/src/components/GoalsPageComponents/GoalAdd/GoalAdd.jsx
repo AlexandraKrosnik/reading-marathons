@@ -1,16 +1,15 @@
 import Container from 'components/Container';
 import FormAdd from './FormAdd/FormAdd';
 import useGoalAdd from './useGoalAdd';
-import AddTable from './AddTable/AddTable';
-import BooksListEmptyMobile from '../BooksListEmptyMobile/BooksListEmptyMobile';
-import BooksListFilledMobile from '../BooksListFilledMobile/BooksListFilledMobile';
+import GoalTable from '../commonComponents/GoalTable/GoalTable';
+import BooksListEmptyMobile from '../commonComponents/BooksListEmptyMobile';
+import BooksListFilledMobile from '../commonComponents/BooksListFilledMobile';
 import StartTrainingButton from './StartTrainingButton';
-import ProgressChart from '../ProgressChart/ProgressChart';
-import MyGoal from '../MyGoal/MyGoal';
+import ProgressChart from '../commonComponents/ProgressChart/ProgressChart';
+import MyGoal from '../commonComponents/MyGoal';
 
-import { StyledContainer } from './GoalAdd.styled';
+import { StyledContainer } from '../commonGoalStyles.styled';
 import ConfirmGoalModal from './ConfirmGoalModal/ConfirmGoalModal';
-import Loader from 'components/Loader/Loader';
 
 const GoalAdd = () => {
   const {
@@ -52,7 +51,7 @@ const GoalAdd = () => {
         setFinishTime={setFinish}
       />
       {!isMobile ? (
-        <AddTable books={booksForTable} onDeleteBook={deleteBookFromTable} />
+        <GoalTable books={booksForTable} onDeleteBook={deleteBookFromTable} />
       ) : (
         <>
           {booksForTable.length === 0 ? (
@@ -80,21 +79,29 @@ const GoalAdd = () => {
           {isDesktop && (
             <StyledContainer>
               {addPartContent}
-              <MyGoal days={numberOfDays} books={numberOfBooks} />
+              <MyGoal days={numberOfDays()} books={numberOfBooks()} />
               <ProgressChart
-                getPagesCount={getPagesCount}
-                getDatesBetweenDates={getDateCountBetweenDates}
+                planData={{
+                  pages: getPagesCount(),
+                  dates: getDateCountBetweenDates(),
+                }}
               />
             </StyledContainer>
           )}
           {!isDesktop && (
             <>
-              {isTablet && <MyGoal days={numberOfDays} books={numberOfBooks} />}
+              {isTablet && (
+                <MyGoal days={numberOfDays()} books={numberOfBooks()} />
+              )}
               {addPartContent}
-              {isMobile && <MyGoal days={numberOfDays} books={numberOfBooks} />}
+              {isMobile && (
+                <MyGoal days={numberOfDays()} books={numberOfBooks()} />
+              )}
               <ProgressChart
-                getPagesCount={getPagesCount}
-                getDatesBetweenDates={getDateCountBetweenDates}
+                planData={{
+                  pages: getPagesCount(),
+                  dates: getDateCountBetweenDates(),
+                }}
               />
             </>
           )}

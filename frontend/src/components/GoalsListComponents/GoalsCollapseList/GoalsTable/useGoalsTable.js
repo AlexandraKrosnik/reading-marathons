@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import moment from 'moment';
 import TimerCell from '../TimerCell/TimerCell';
@@ -19,6 +20,7 @@ const useGoalsTable = () => {
   const { PLAN, ACTIVE, FINISHED } = useGoalsCollapseList();
   const [searchText, setSearchText] = useState({});
   const searchInput = useRef(null);
+  const navigate = useNavigate();
 
   const getPercent = (smallerNumber, largerNumber, roundingThreshold = 0) =>
     ((smallerNumber / largerNumber) * 100).toFixed(roundingThreshold);
@@ -27,9 +29,9 @@ const useGoalsTable = () => {
     let countBooksPages = 0;
     let countBooksLeftPages = 0;
 
-    record.books.forEach(({ book }) => {
+    record.statistics.forEach(({ statisticsPages, book }) => {
       countBooksPages += book.pages;
-      countBooksLeftPages += book.leftPages;
+      countBooksLeftPages += statisticsPages.readPages;
     });
     return getPercent(countBooksLeftPages, countBooksPages, 1);
   };
@@ -85,7 +87,6 @@ const useGoalsTable = () => {
               percent={percent}
               status="exception"
               data-status="error"
-              // size={20}
             />
             <span>Виконано на {percent}%</span>
           </StatusColumnStyled>
@@ -96,12 +97,19 @@ const useGoalsTable = () => {
     }
   };
 
-  const renderBooks = (books, dataIndex) => {
-    return (
+  const renderBooks = ({ statistics }) => {
+    return statistics.length === 0 ? (
+      <LoadingOutlined />
+    ) : (
       <BooksListStyled
-        dataSource={books}
-        renderItem={({ book }) => {
-          const percent = getPercent(book.leftPages, book.pages, 0);
+        dataSource={statistics}
+        renderItem={({ book, statisticsPages }) => {
+          const percent = getPercent(
+            Number(statisticsPages.readPages),
+            Number(book.pages),
+            0
+          );
+
           return (
             <BooksListItemStyled>
               <ProgressStyled
@@ -220,12 +228,12 @@ const useGoalsTable = () => {
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
-    render: text => {
+    render: (text, record) => {
       if (dataIndex === 'title') {
         return renderTitle(text);
       }
       if (dataIndex === 'books') {
-        return renderBooks(text);
+        return renderBooks(record);
       }
     },
   });
@@ -283,7 +291,11 @@ const useGoalsTable = () => {
       },
     ];
   };
-  return { tableColumnsContent };
+
+  const handleRowClick = ({ _id: bookId }) => {
+    navigate({ pathname: `/goals/${bookId}` });
+  };
+  return { tableColumnsContent, handleRowClick };
 };
 
 export default useGoalsTable;

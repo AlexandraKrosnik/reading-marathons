@@ -9,9 +9,6 @@ export const HeaderBackground = styled.div`
 
   width: 100%;
   height: 40px;
-  /* margin-top: 1px; */
-  /* background-color: #ffffff; */
-  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
 `;
 
 export const ContainerStyled = styled(Container)`
@@ -26,7 +23,7 @@ export const SearchStyled = styled.div`
   align-items: center;
   width: 60%;
   height: 100%;
-  /* border-bottom: 1px solid #d9d9d9; */
+
   @media (min-width: ${p => p.theme.breakpoints.tablet}) {
     width: 50%;
   }
@@ -59,12 +56,6 @@ export const SearchInputStyled = styled(Search)`
   & .ant-input-group-addon .ant-btn {
     border: none;
   }
-  /* @media (min-width: ${p => p.theme.breakpoints.tablet}) {
-    width: 50%;
-  }
-  @media (min-width: ${p => p.theme.breakpoints.desktop}) {
-    width: 40%;
-  } */
 `;
 
 export const ButtonStyled = styled(Button)`

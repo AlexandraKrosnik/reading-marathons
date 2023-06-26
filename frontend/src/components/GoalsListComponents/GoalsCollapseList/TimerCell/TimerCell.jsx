@@ -6,6 +6,7 @@ import {
   TimerCellTextStyled,
   ClockCircleOutlinedStyled,
 } from './TimerCell.styled';
+import PropTypes from 'prop-types';
 const TimerCell = ({ startDateTime }) => {
   const [timeDiff, setTimeDiff] = useState();
   useEffect(() => {
@@ -40,6 +41,9 @@ const TimerCell = ({ startDateTime }) => {
       )}
     </TimerCellStyled>
   );
+};
+TimerCell.propTypes = {
+  startDateTime: PropTypes.string.isRequired,
 };
 
 export default TimerCell;

@@ -1,6 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space } from 'antd';
 import { forwardRef } from 'react';
+import PropTypes from 'prop-types';
 const FilterDropdown = forwardRef(
   (
     {
@@ -56,5 +57,15 @@ const FilterDropdown = forwardRef(
     );
   }
 );
+
+FilterDropdown.propTypes = {
+  setSelectedKeys: PropTypes.func.isRequired,
+  selectedKeys: PropTypes.array.isRequired,
+  confirm: PropTypes.func.isRequired,
+  clearFilters: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  dataIndex: PropTypes.string.isRequired,
+};
 
 export default FilterDropdown;

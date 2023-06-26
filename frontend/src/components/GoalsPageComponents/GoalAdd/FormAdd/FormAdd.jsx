@@ -5,7 +5,6 @@ import {
   StyledForm,
   StyledDatePicker,
   StyledSelect,
-  StyledOption,
   SubmitButton,
   CalendarWrapper,
   FlexWrapper,
@@ -13,7 +12,6 @@ import {
 } from './FormAdd.styled';
 import useFormAdd from './useFormAdd';
 import moment from 'moment';
-import dayjs from 'dayjs';
 
 const FormAdd = ({
   books,
@@ -104,6 +102,15 @@ const FormAdd = ({
       </StyledForm>
     </TrainingFormWrapper>
   );
+};
+
+FormAdd.propTypes = {
+  books: PropTypes.array.isRequired,
+  selectedBooks: PropTypes.func.isRequired,
+  startTime: PropTypes.string,
+  finishTime: PropTypes.string,
+  setStartTime: PropTypes.func.isRequired,
+  setFinishTime: PropTypes.func.isRequired,
 };
 
 export default FormAdd;
