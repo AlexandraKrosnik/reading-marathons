@@ -9,21 +9,42 @@ import {
 import useLibraryComponent from './useLibraryComponent';
 import { ReactComponent as PlusIcon } from 'images/library/plus.svg';
 import EmtpyLibraryText from 'components/modals/EmtpyLibraryText';
-import { Empty } from 'antd';
+import { Empty, Select } from 'antd';
 import { Outlet } from 'react-router-dom';
+import { StyledInput } from 'components/BookComponents/BookForm/BookForm.styled';
 
 const LibraryComponent = () => {
   const {
     isMobile,
     navigate,
-    isEmpty,
+    isNoBooks,
     isLoading,
     error,
     items,
     defaultTabKey,
     onTabChange,
     search,
+    handleSearchChange,
+    searchField,
+    handleSelectSearchOption
   } = useLibraryComponent();
+
+
+  const getSearchSelectOptions = () => {
+    return [
+      {value: 'title', label: 'Назвою книги'},
+      {value: 'collections', label: 'Колекцією'}
+    ]
+  }
+
+  const getSearchInput = () => {
+    return (
+      <div className='library-component__search'>
+        <Select options={getSearchSelectOptions()} onChange={handleSelectSearchOption} placeholder="Виберіть категорію пошуку" defaultValue="title"/>
+        <StyledInput placeholder="Пошук книги за назвою" onChange={handleSearchChange} value={searchField}/>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -31,7 +52,7 @@ const LibraryComponent = () => {
         {error && <p>{error?.data?.message}</p>}
         {!isLoading && (
           <StyledSection>
-            {!isEmpty ? (
+            {!isNoBooks ? (
               isMobile ? (
                 <>
                   <TextStyledPrimary>Бібліотека пуста.</TextStyledPrimary>
@@ -43,11 +64,14 @@ const LibraryComponent = () => {
               )
             ) : (
               defaultTabKey && (
+                <>
+                {getSearchInput()}
                 <StyledTabs
                   defaultActiveKey={defaultTabKey}
                   onChange={onTabChange}
                   items={items}
                 />
+                </>
               )
             )}
             <AddBtn

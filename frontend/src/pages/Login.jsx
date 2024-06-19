@@ -1,7 +1,6 @@
-import LoginComponent from 'components/Login/LoginComponent';
-
+import AuthenticationComponent from 'components/AuthenticationComponent/AuthenticationComponent';
 const Login = () => {
-  return <LoginComponent />;
+  return <AuthenticationComponent type="login" />;
 };
 
 export default Login;

@@ -21,7 +21,6 @@ const removeById = async (req, res) => {
     try {
       await Promise.all(
         trainings.map(async ({ _id: trainingId, books }) => {
-          console.log(books.length);
           if (books.length === 1) {
             const deletedTraining = await Training.findOneAndRemove({
               _id: trainingId,

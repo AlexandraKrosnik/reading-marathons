@@ -4,6 +4,14 @@ import styled from 'styled-components';
 export const StyledSection = styled.section`
   padding: 40px 0;
   font-family: 'Montserrat';
+  .library-component__search {
+    display: flex;
+    align-items: center;
+
+    .ant-select{
+      margin-right: 10px;
+    }
+  }
 `;
 
 export const StyledTabs = styled(Tabs)`

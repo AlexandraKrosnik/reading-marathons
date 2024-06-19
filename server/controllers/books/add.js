@@ -16,19 +16,22 @@ const add = async (req, res) => {
   }
   let newBookImage;
   if (image) {
-    const { url, public_id } = await cloudinary.uploader.upload(image, {
-      upload_preset: "book_images",
-    });
+    const { url, public_id: publicId } = await cloudinary.uploader.upload(
+      image,
+      {
+        upload_preset: "book_images",
+      }
+    );
     newBookImage = {
       url,
-      public_id,
+      public_id: publicId,
     };
   }
 
   const book = await Book.create({
     ...req.body,
     user: id,
-    image: image ? newBookImage : defaultImage,
+    image: image ? newBookImage : defaultImage
   });
   if (!book) {
     throw BadRequest(`Check the entered data!`);

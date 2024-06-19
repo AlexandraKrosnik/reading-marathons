@@ -2,8 +2,8 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import openNotificationWithIcon from 'components/Notification';
-axios.defaults.baseURL = 'http://localhost:3001/api';
-
+// axios.defaults.baseURL = 'https://reading-marathons-backend.onrender.com/api';
+axios.defaults.baseURL = 'http://localhost:3001/api'
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;

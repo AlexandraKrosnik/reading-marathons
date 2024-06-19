@@ -5,7 +5,7 @@ const checkAndUpdateTrainingStatus = require("../../utils/checkAndUpdateTraining
 const add = async (req, res) => {
   const { id } = req.user;
   const { start, finish, title, books, booksToRestartReading } = req.body;
-
+  console.log(start)
   const checkBooks = (bookId, restartedBookId) => bookId === restartedBookId;
 
   booksToRestartReading?.map((restartedBook) => {

@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
 import { StyledOption } from './FormAdd.styled';
-import { useMemo } from 'react';
+
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 
@@ -16,16 +16,10 @@ const useFormAdd = (selectedBooks, startTime, books) => {
   }, [books]);
 
   const disabledStartDate = current => {
-    // Can not select days before today
     return current < moment().startOf('hour');
   };
   const disabledFinishDate = current => {
-    // Can not select days before tomorrow & after month
-    return (
-      current < moment(startTime).add(1, 'day')
-      // current < moment(startTime).add(1, 'day') ||
-      // current > moment(startTime).add(32, 'day')
-    );
+    return current < moment(startTime).add(1, 'day');
   };
 
   const handleSubmit = ({ books }) => {

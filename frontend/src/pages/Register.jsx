@@ -1,7 +1,7 @@
-import SignupComponent from 'components/Signup/SignupComponent';
+import AuthenticationComponent from 'components/AuthenticationComponent/AuthenticationComponent';
 
 const Register = () => {
-  return <SignupComponent />;
+  return <AuthenticationComponent type="singUp" />;
 };
 
 export default Register;

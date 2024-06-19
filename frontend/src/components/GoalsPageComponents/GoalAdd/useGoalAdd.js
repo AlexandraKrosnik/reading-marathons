@@ -18,7 +18,7 @@ const useGoalAdd = () => {
   const [addButtonDisable, setAddButtonDisable] = useState(true);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [booksToConfirm, setBooksToConfirm] = useState();
-  const [isAddLoading, setIsAddLoading] = useState(false);
+
   const [titleGoal, setTitleGoal] = useState();
   const navigate = useNavigate();
 
@@ -27,8 +27,8 @@ const useGoalAdd = () => {
   const localStorageFinishDate = 'finishDate';
   const localStorageTableBooks = 'tableBooks';
   const localStorageSelectBooks = 'selectBooks';
-  const { data, error } = useGetBooksQuery();
-  const [addTraining, { isLoading }] = useAddTrainingMutation();
+  const { data } = useGetBooksQuery();
+  const [addTraining] = useAddTrainingMutation();
 
   const setStartDateToLocalStorage = useCallback(newDate => {
     localStorage.setItem(localStorageStartDate, JSON.stringify(newDate));
@@ -84,9 +84,13 @@ const useGoalAdd = () => {
 
   useEffect(() => {
     if (data) {
+      if (data.books.length === 0) {
+        openNotificationWithIcon('warning', 'Спочатку додайте нові книжки!');
+        navigate({ pathname: `/goals` });
+      }
       setBooks(data.books);
     }
-  }, [data]);
+  }, [data, navigate]);
 
   useEffect(() => {
     const startDate = new Date(start);
@@ -250,6 +254,7 @@ const useGoalAdd = () => {
   };
 
   const numberOfBooks = () => {
+    console.log(booksForTable.length);
     return booksForTable.length;
   };
 
@@ -294,7 +299,7 @@ const useGoalAdd = () => {
   };
 
   const onAddGoal = async (booksToRestartReading = []) => {
-    setIsAddLoading(true);
+    // setIsAddLoading(true);
     setConfirmModalVisible(false);
     const data = {
       start,
@@ -302,7 +307,6 @@ const useGoalAdd = () => {
       title: titleGoal,
       books: booksForTable.map(book => book._id),
     };
-
     if (booksToRestartReading?.length !== 0) {
       data.booksToRestartReading = booksToRestartReading.map(book => book._id);
     }

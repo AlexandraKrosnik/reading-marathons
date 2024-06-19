@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGetTrainingsQuery } from 'redux/RTKQuery/booksApi';
 
 const useGoalsCollapseList = () => {
-  const { data, isLoading, isError, isSuccess } = useGetTrainingsQuery();
+  const { data } = useGetTrainingsQuery();
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [planTrainings, setPlanTrainings] = useState([]);
   const [activeTrainings, setActiveTrainings] = useState([]);

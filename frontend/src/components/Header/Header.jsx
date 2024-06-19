@@ -15,7 +15,7 @@ import {
   FlexWrapper,
   BackgroundWrapper,
 } from './Header.styled';
-import Container from 'components/Container';
+
 import { useMatchMedia } from 'hooks';
 import Modal from 'components/modals/Modal/Modal';
 import ExitModal from 'components/modals/ExitModal';
@@ -43,12 +43,34 @@ const Header = () => {
   return (
     <>
       <BackgroundWrapper>
-        <Container>
-          <HeaderWrapper>
-            {isMobile && (
-              <>
-                <Logo to="/library">BR</Logo>
-                {isLoggedIn && (
+        <HeaderWrapper>
+          {isMobile && (
+            <>
+              <Logo to="/library">BR</Logo>
+              {isLoggedIn && (
+                <FlexWrapper>
+                  <StyledLink to="/library">
+                    <MdOutlineHome size={20} />
+                  </StyledLink>
+                  <StatsLink to="/goals">
+                    <HiOutlineBookOpen size={18} />
+                  </StatsLink>
+
+                  <UserLogo>{firstLetter}</UserLogo>
+                  <ExitButton onClick={toggleModal}>Вихід</ExitButton>
+                </FlexWrapper>
+              )}
+            </>
+          )}
+          {!isMobile && (
+            <>
+              <Logo to="/library">BR</Logo>
+              {isLoggedIn && (
+                <>
+                  <FlexWrapper>
+                    <UserLogo>{firstLetter}</UserLogo>
+                    <UserName>{userName}</UserName>
+                  </FlexWrapper>
                   <FlexWrapper>
                     <StyledLink to="/library">
                       <MdOutlineHome size={20} />
@@ -56,37 +78,13 @@ const Header = () => {
                     <StatsLink to="/goals">
                       <HiOutlineBookOpen size={18} />
                     </StatsLink>
-
-                    <UserLogo>{firstLetter}</UserLogo>
                     <ExitButton onClick={toggleModal}>Вихід</ExitButton>
                   </FlexWrapper>
-                )}
-              </>
-            )}
-            {!isMobile && (
-              <>
-                <Logo to="/library">BR</Logo>
-                {isLoggedIn && (
-                  <>
-                    <FlexWrapper>
-                      <UserLogo>{firstLetter}</UserLogo>
-                      <UserName>{userName}</UserName>
-                    </FlexWrapper>
-                    <FlexWrapper>
-                      <StyledLink to="/library">
-                        <MdOutlineHome size={20} />
-                      </StyledLink>
-                      <StatsLink to="/goals">
-                        <HiOutlineBookOpen size={18} />
-                      </StatsLink>
-                      <ExitButton onClick={toggleModal}>Вихід</ExitButton>
-                    </FlexWrapper>
-                  </>
-                )}
-              </>
-            )}
-          </HeaderWrapper>
-        </Container>
+                </>
+              )}
+            </>
+          )}
+        </HeaderWrapper>
       </BackgroundWrapper>
       {isModalVisible && (
         <Modal onClose={toggleModal}>

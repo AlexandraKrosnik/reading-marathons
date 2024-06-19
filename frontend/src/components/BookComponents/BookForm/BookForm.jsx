@@ -9,12 +9,20 @@ import {
   StyledInputNumber,
 } from './BookForm.styled';
 import UploadImages from 'components/UploadImage';
-import { Radio } from 'antd';
+import { Divider, Radio, Select, Space, message } from 'antd';
+import {
+  useAddCollectionMutation,
+  useGetCollectionAllQuery,
+} from 'redux/RTKQuery/booksApi';
 
 import useForm from './useForm';
+import { useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import "./bookForm.css";
 
 const BookForm = ({ action }) => {
   const {
+    options,
     form,
     onAdd,
     Fields,
@@ -31,6 +39,22 @@ const BookForm = ({ action }) => {
     initialImage,
     showConfirmUpdate,
   } = useForm(action);
+
+
+  const [newOption, setNewOption] = useState('');
+  const [addCollection] = useAddCollectionMutation();
+
+
+  const addNewCollection = async (e) => {
+    const result = await addCollection({ name: newOption });
+
+    if ('error' in result) {
+      message.error(result.error.data.message);
+    } else {
+      message.success('Колекцію успішно додано!');
+      setNewOption('');
+    }
+  };
 
   return (
     <StyledForm
@@ -82,6 +106,54 @@ const BookForm = ({ action }) => {
             <StyledInput placeholder="..." />
           </FormItem>
           <FormItem
+            name={Fields.collections.name}
+            label={Fields.collections.label}
+            rules={[yupSync]}
+          >
+            <Select
+              placeholder="Виберіть назву колекцій"
+              mode="multiple"
+              options={options}
+              placement="bottomLeft"
+              dropdownRender={menu => (
+                <>
+                  {menu}
+                  <Divider
+                    style={{
+                      margin: '8px 0',
+                    }}
+                  />
+                  <Space
+                    style={{
+                      padding: '0 8px 4px',
+                    }}
+                  ></Space>
+                  <div className='select-input__add-new-option'>
+                  <StyledInput
+                    placeholder="..."
+                    value={newOption}
+                    onChange={e => {
+                      setNewOption(e.target.value);
+                    }}
+                  />
+                  <StyledButton
+                    type="text"
+                    icon={<PlusOutlined />}
+                    onClick={addNewCollection}
+                  >Додати колекцію</StyledButton>
+                  </div>
+                </>
+              )}
+            />
+          </FormItem>
+          <FormItem
+            name={Fields.readTimes.name}
+            label={Fields.readTimes.label}
+            rules={[yupSync]}
+          >
+            <StyledInputNumber min={1} disabled={isDisabledReadTimes} />
+          </FormItem>
+          <FormItem
             name={Fields.status.name}
             label={Fields.status.label}
             rules={[yupSync]}
@@ -96,13 +168,6 @@ const BookForm = ({ action }) => {
                 </>
               )}
             </Radio.Group>
-          </FormItem>
-          <FormItem
-            name={Fields.readTimes.name}
-            label={Fields.readTimes.label}
-            rules={[yupSync]}
-          >
-            <StyledInputNumber min={1} disabled={isDisabledReadTimes} />
           </FormItem>
           {isChange && <></>}
         </Box>

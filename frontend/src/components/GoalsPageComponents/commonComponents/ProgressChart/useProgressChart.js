@@ -53,6 +53,7 @@ const useProgressChart = (planData, resultData) => {
         if (currentDate > date1) {
           return isSame ? isSame.pages : 0;
         }
+        return undefined;
       })
       .filter(value => value !== undefined);
   };

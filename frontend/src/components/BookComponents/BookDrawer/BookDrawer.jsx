@@ -76,12 +76,12 @@ const BookDrawer = () => {
           <BodyStyled>
             <TitleStyled>{book.title}</TitleStyled>
             <DescriptionsStyled layout="horizontal" column={1}>
-              <Descriptions.Item
+              <Descriptions.Item key="author"
                 label={<DescriptionsItemLabel>Автор</DescriptionsItemLabel>}
               >
                 <DescriptionsItemContent>{book.author}</DescriptionsItemContent>
               </Descriptions.Item>
-              <Descriptions.Item
+              <Descriptions.Item key="year"
                 label={
                   <DescriptionsItemLabel>Рік видання</DescriptionsItemLabel>
                 }
@@ -90,7 +90,7 @@ const BookDrawer = () => {
                   {book.publication}
                 </DescriptionsItemContent>
               </Descriptions.Item>
-              <Descriptions.Item
+              <Descriptions.Item key="amount"
                 label={
                   <DescriptionsItemLabel>
                     Кількість сторінок
@@ -99,7 +99,7 @@ const BookDrawer = () => {
               >
                 <DescriptionsItemContent>{book.pages}</DescriptionsItemContent>
               </Descriptions.Item>
-              <Descriptions.Item
+              <Descriptions.Item key="status"
                 label={<DescriptionsItemLabel>Статус</DescriptionsItemLabel>}
               >
                 <DescriptionsItemContent data-status={book.status}>
@@ -108,7 +108,7 @@ const BookDrawer = () => {
                   {book.status === 'now' && 'Читаю зараз'}
                 </DescriptionsItemContent>
               </Descriptions.Item>
-              <Descriptions.Item
+              <Descriptions.Item key="read_times"
                 label={
                   <DescriptionsItemLabel>
                     Кількість прочитаних разів
@@ -119,11 +119,23 @@ const BookDrawer = () => {
                   {book.readTimes}
                 </DescriptionsItemContent>
               </Descriptions.Item>
+              <Descriptions.Item key="collections"
+                label={
+                  <DescriptionsItemLabel>
+                    Колекції
+                  </DescriptionsItemLabel>
+                }
+              >
+                {book.collections.map((item) => {
+                  return <DescriptionsItemContent key={item._id_}>{item.name}</DescriptionsItemContent>
+                  })
+                }
+              </Descriptions.Item>
               {(book.rating ||
                 book.status !== 'plan' ||
                 book.readTimes > 0) && (
                 <>
-                  <Descriptions.Item
+                  <Descriptions.Item key="mark"
                     label={
                       <DescriptionsItemLabel>Оцінка</DescriptionsItemLabel>
                     }
@@ -137,6 +149,7 @@ const BookDrawer = () => {
                     </DescriptionsItemContent>
                   </Descriptions.Item>
                   <Descriptions.Item
+                  key="review"
                     label={
                       <DescriptionsItemLabel>Відгук</DescriptionsItemLabel>
                     }

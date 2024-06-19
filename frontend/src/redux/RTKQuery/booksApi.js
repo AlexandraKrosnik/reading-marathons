@@ -4,7 +4,8 @@ import { axiosBaseQuery } from '../axiosBaseQuery';
 export const booksApi = createApi({
   reducerPath: 'booksRTK',
   baseQuery: axiosBaseQuery({
-    baseUrl: 'http://localhost:3001/api',
+    // baseUrl: 'https://reading-marathons-backend.onrender.com/api',
+    baseUrl: 'http://localhost:3001/api'
   }),
   tagTypes: ['Books', 'BookById', 'Trainings', 'TrainingById'],
   endpoints: builder => ({
@@ -72,22 +73,30 @@ export const booksApi = createApi({
       query: id => ({ url: `/trainings/${id}`, method: 'DELETE' }),
       invalidatesTags: ['TrainingById'],
     }),
-    // getStatisticsById: builder.query({
-    //   query: id => ({ url: `/statistics/${id}`, method: 'GET' }),
-    //   providesTags: ['Statistics', 'Trainings'],
-    // }),
-    // updateStatisticsById: builder.mutation({
-    //   query: params => ({
-    //     url: `/statistics/${params.id}`,
-    //     method: 'PATCH',
-    //     data: params.data,
-    //   }),
-    //   invalidatesTags: ['Books', 'BookById', 'Trainings', 'Statistics'],
-    // }),
-    // deleteStatisticsById: builder.mutation({
-    //   query: id => ({ url: `/statistics/${id}`, method: 'DELETE' }),
-    //   invalidatesTags: ['Statistics'],
-    // }),
+    getCollectionAll:  builder.query({
+      query: () => ({ url: `/collection/all`, method: 'GET' }),
+      providesTags: ['Collection'],
+    }),
+    getCollectionById: builder.query({
+      query: id => ({ url: `/collection/${id}`, method: 'GET' }),
+      providesTags: ['Collection']
+    }),
+    deleteCollection : builder.mutation({
+      query: id => ({ url: `/collection/${id}`, method: 'DELETE' }),
+      invalidatesTags: ['Collection'],
+    }),
+    updateCollectionById :builder.mutation({
+      query: params => ({
+        url: `/collection/${params.id}`,
+        method: 'PATCH',
+        data: params.data,
+      }),
+      invalidatesTags: ['Collection', "Books"],
+    }),
+    addCollection: builder.mutation({
+      query: value => ({url: '/collection', method: 'POST', data: value}),
+      invalidatesTags: ['Books', 'BookById', "Collection"]
+    })
   }),
 });
 
@@ -104,6 +113,12 @@ export const {
   useUpdateTrainingByIdMutation,
   useUpdateStatisticByIdMutation,
   useDeleteTrainingByIdMutation,
+  useAddCollectionMutation,
+  useGetCollectionAllQuery,
+  useGetCollectionByIdQuery,
+  useUpdateCollectionByIdMutation,
+  useDeleteCollectionMutation,
+
   // useGetStatisticsByIdQuery,
   // useUpdateStatisticsByIdMutation,
   // useDeleteStatisticsByIdMutation,

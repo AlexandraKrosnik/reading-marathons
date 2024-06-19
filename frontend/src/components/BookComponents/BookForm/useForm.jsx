@@ -4,6 +4,7 @@ import {
   useGetBookByIdQuery,
   useUpdateBookMutation,
   useAddBookMutation,
+  useGetCollectionAllQuery
 } from 'redux/RTKQuery/booksApi';
 import { Form, message, Modal } from 'antd';
 import { QuestionOutlined } from '@ant-design/icons';
@@ -37,15 +38,21 @@ const Fields = {
     name: 'readTimes',
     label: 'Кількість прочитаних разів',
   },
+  collections: {
+    name: 'collections',
+    label: 'Колекція',
+  }
 };
 
 const useForm = action => {
   const params = useParams();
-  const [bookId, setBookId] = useState(params.id);
+  const bookId = params.id;
+
   const [selectedFile, setSelectedFile] = useState();
   const [isAddCompleted, setIsAddCompleted] = useState(false);
   const [isDisabledReadTimes, setIsDisabledReadTimes] = useState(true);
   const [isDisabledButton, setIsDisabledButton] = useState();
+  const [options, setOptions] = useState([])
 
   const isFirst = useRef(true);
   const navigate = useNavigate();
@@ -57,16 +64,12 @@ const useForm = action => {
   const isChange = action === 'change';
   const localStorageItem = 'BookModal';
   const [addBook, { isLoading }] = useAddBookMutation();
-  const {
-    data,
-    isLoading: isGetBookLoading,
-    isError,
-    isSuccess,
-  } = useGetBookByIdQuery(bookId, {
+  const { data } = useGetBookByIdQuery(bookId, {
     skip: !bookId,
   });
   const [updateBook] = useUpdateBookMutation();
   const [initialImage, setInitialImage] = useState(data?.book?.image?.url);
+  const {  data: getCollections } = useGetCollectionAllQuery();
 
   const showConfirmRestoration = useCallback(() => {
     return confirm({
@@ -74,6 +77,7 @@ const useForm = action => {
       icon: <QuestionOutlined />,
       okText: 'Так',
       cancelText: 'Ні',
+
       onOk() {
         const storage = JSON.parse(localStorage.getItem(localStorageItem));
         for (const [key, value] of Object.entries(storage)) {
@@ -94,6 +98,14 @@ const useForm = action => {
       },
     });
   }, [confirm, form]);
+
+  useEffect(()=>{
+    if(getCollections?.collections){
+      console.log("add")
+      const getOptions = [...getCollections.collections.map(item => ({ value: item._id, label: item.name }))]
+      setOptions(getOptions)
+    }
+  },[getCollections])
 
   useEffect(() => {
     if (
@@ -125,15 +137,20 @@ const useForm = action => {
 
   useEffect(() => {
     if (data?.book) {
+      console.log(data?.book, "data?.book");
       for (const [key, value] of Object.entries(data.book)) {
         if (key === 'image') {
           form.setFieldValue(key, value.url);
           setSelectedFile({ url: value.url });
           setInitialImage(value.url);
+        } else if(key === 'collections'){
+          const res = value.map((item) => ({label: item.name, value: item._id}))
+          form.setFieldValue(key, res);
         } else {
           if (key === 'readTimes' && value > 0) {
             setIsDisabledReadTimes(false);
           }
+          console.log(value);
           form.setFieldValue(key, value);
         }
       }
@@ -218,6 +235,10 @@ const useForm = action => {
       .number()
       .min(0, 'Число не може менше 0')
       .typeError('Поле може містити тільки числа'),
+    collections: yup
+    .array()
+    .of(yup.string())
+    .required("Обов'язкове поле"),
   });
 
   const yupSync = {
@@ -243,12 +264,20 @@ const useForm = action => {
       setIsDisabledReadTimes(false);
     }
   };
+  const compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => b.find(el=>el===element));
 
   const onValuesChange = (changedValues, allValues) => {
     if (isChange) {
       let change = [];
       for (const [key, value] of Object.entries(allValues)) {
-        change.push(value !== data.book[key]);
+        if(key === "collections"){
+          const prevCollections = data.book[key].map(item=>item._id) 
+          change.push(!compareArrays(prevCollections, value))
+        }else{
+          change.push(value !== data.book[key]);
+        }
+
       }
       if (change.includes(true)) {
         setIsDisabledButton(false);
@@ -325,6 +354,7 @@ const useForm = action => {
   );
 
   return {
+    options,
     form,
     onAdd,
     Fields,

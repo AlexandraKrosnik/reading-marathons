@@ -6,6 +6,11 @@ export const DrawerStyled = styled(Drawer)`
   .ant-drawer-content {
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
+    
+    .ant-descriptions-item-content {
+      flex-direction: column;
+      gap: 10px 0;
+    }
   }
   .ant-drawer-mask {
     background: rgb(0 0 0 / 27%);

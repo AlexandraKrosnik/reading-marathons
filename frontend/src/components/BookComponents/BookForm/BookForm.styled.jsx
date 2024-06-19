@@ -49,6 +49,7 @@ export const StyledInput = styled(Input)`
     border-color: ${p => p.theme.colors.mainBackground};
     box-shadow: ${p => p.theme.shadows.input};
   }
+
 `;
 
 export const StyledInputNumber = styled(InputNumber)`

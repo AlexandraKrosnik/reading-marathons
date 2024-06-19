@@ -56,6 +56,11 @@ const bookSchema = Schema({
   resume: {
     type: String,
   },
+  collections: [{
+    type: Schema.Types.ObjectId,
+    ref: "collection",
+  }
+  ]
 });
 
 const joiSchema = Joi.object({
@@ -70,6 +75,7 @@ const joiSchema = Joi.object({
   image: Joi.string().allow(""),
   rating: Joi.number(),
   resume: Joi.string(),
+  collections: Joi.array().items(Joi.string())
 });
 
 const joiSchemaReviews = Joi.object({

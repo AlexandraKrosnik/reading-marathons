@@ -12,12 +12,9 @@ const useGoalById = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { isMobile, isTablet, isDesktop } = useMatchMedia();
-  const { data, isLoading, isError, isSuccess } = useGetTrainingByIdQuery(
-    goalId,
-    {
-      skip: !goalId,
-    }
-  );
+  const { data, isLoading, isError } = useGetTrainingByIdQuery(goalId, {
+    skip: !goalId,
+  });
 
   const [updateStatisticById] = useUpdateStatisticByIdMutation();
 
@@ -82,7 +79,7 @@ const useGoalById = () => {
     }
   };
 
-  const getBooksQuantity = () => data.training.statistics.length + 1;
+  const getBooksQuantity = () => data.training.statistics.length;
 
   const getLeftBooksQuantity = () => {
     if (data.training.status === 'planned') {

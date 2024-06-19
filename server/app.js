@@ -9,6 +9,7 @@ const swaggerDocument = require("./swagger.json");
 const authRouter = require("./routes/api/auth");
 const bookRouter = require("./routes/api/books");
 const trainingRouter = require("./routes/api/trainings");
+const collectionRouter = require("./routes/api/collections")
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/books", bookRouter);
 app.use("/api/trainings", trainingRouter);
+app.use("/api/collection", collectionRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

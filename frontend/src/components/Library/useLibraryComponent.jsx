@@ -14,10 +14,12 @@ const useLibraryComponent = () => {
   const [planBooks, setPlanBooks] = useState([]);
   const [alreadyBooks, setAlreadyBooks] = useState([]);
   const [nowBooks, setNowBooks] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(true);
+  const [isNoBooks, setIsNoBooks] = useState(true);
   const [defaultTabKey, setDefaultTabKey] = useState();
   const { data, error, isLoading } = useGetBooksQuery();
   const tab = searchParams.get('tab');
+  const [searchField, setSearchField] = useState("");
+  const [searchCriterion, setSearchCriterion] = useState("title");
 
   const params = useMemo(() => {
     return ['plan', 'now', 'already'];
@@ -29,7 +31,13 @@ const useLibraryComponent = () => {
       let already = [];
       let now = [];
 
-      data.books.forEach(item => {
+      const filteredBooks = data.books.filter( book => {
+        if (searchCriterion === 'title') book.title.toLowerCase().includes(searchField.toLowerCase());
+
+        return  book.collections.find(item => item.name.toLowerCase().includes(searchField.toLowerCase()));
+      })
+
+      filteredBooks.forEach(item => {
         if (item.status === 'plan') {
           plan.push(item);
         }
@@ -44,9 +52,9 @@ const useLibraryComponent = () => {
       setPlanBooks(plan);
       setAlreadyBooks(already);
       setNowBooks(now);
-      setIsEmpty(!!plan.length || !!already.length || !!now.length);
+      setIsNoBooks(!!plan.length || !!already.length || !!now.length || !!searchField);
     }
-  }, [data]);
+  }, [data, searchField, searchCriterion]);
 
   useEffect(() => {
     if (!tab) {
@@ -58,6 +66,14 @@ const useLibraryComponent = () => {
   useEffect(() => {
     setDefaultTabKey(tab);
   }, [tab]);
+
+  const handleSearchChange = (e) => {
+    setSearchField(e.target.value);
+  }
+
+  const handleSelectSearchOption = (value) => {
+    setSearchCriterion(value);
+  }
 
   const items = useMemo(() => {
     return [
@@ -71,7 +87,6 @@ const useLibraryComponent = () => {
             <BookList data={planBooks} />
           ),
       },
-
       {
         label: 'Читаю',
         key: params[1],
@@ -85,7 +100,7 @@ const useLibraryComponent = () => {
         disabled: alreadyBooks.length === 0,
       },
     ];
-  }, [alreadyBooks, nowBooks, planBooks, params]);
+  }, [alreadyBooks, planBooks, params, nowBooks]);
 
   const onTabChange = key => {
     searchParams.set('tab', key);
@@ -98,13 +113,16 @@ const useLibraryComponent = () => {
     nowBooks,
     planBooks,
     navigate,
-    isEmpty,
+    isNoBooks,
     isLoading,
     error,
     items,
     defaultTabKey,
     onTabChange,
     search,
+    handleSearchChange,
+    searchField,
+    handleSelectSearchOption
   };
 };
 

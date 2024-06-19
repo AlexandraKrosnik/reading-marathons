@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { Progress, Badge, Button } from 'antd';
-
 export const StyledList = styled.ul`
   display: flex;
   flex-direction: column;

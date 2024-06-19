@@ -20,7 +20,7 @@ export const BookModalContent = styled(Modal)`
     @media (min-width: ${p => p.theme.breakpoints.desktop}) {
       width: fit-content;
       min-width: 50vw;
-      height: 360px;
+      height: 420px;
     }
   }
   .ant-modal-body {

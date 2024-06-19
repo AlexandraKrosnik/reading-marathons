@@ -1,12 +1,26 @@
 import styled from 'styled-components';
+import device from 'styles/device';
 import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 export const HeaderWrapper = styled.header`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
   height: 60px;
+
+  @media ${device.mobile} {
+    width: 320px;
+  }
+
+  @media ${device.tablet} {
+    width: 768px;
+  }
+
+  @media ${device.desktop} {
+    width: 1280px;
+  }
 `;
 
 export const FlexWrapper = styled.div`

@@ -1,4 +1,5 @@
 import GlobalStyle from '../../styles/GlobalStyle';
+import { AppStyled } from './App.styled';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,11 +7,11 @@ import { authOperations } from 'redux/auth';
 import SharedLayout from 'components/SharedLayout';
 import PrivateRoute from 'components/PrivateRoute';
 import PublicRoute from 'components/PublicRoute';
-import GoogleRedirect from 'components/Login/GoogleRedirect';
+import GoogleRedirect from 'components/AuthenticationComponent/GoogleRedirect';
 
 import MobileRoute from 'components/MobileRoute/MobileRoute';
 import AddBook from 'pages/AddBook';
-import AboutApp from 'components/Signup/AboutApp';
+// import AboutApp from 'components/Signup/AboutApp';
 import { getFetchingCurrent } from 'redux/auth';
 import BookDrawer from 'components/BookComponents/BookDrawer';
 import BookModal from 'components/BookComponents/BookModal/BookModal';
@@ -38,112 +39,113 @@ export default function App() {
     firstRenderEnded && (
       <>
         <GlobalStyle />
+        <AppStyled>
+          <Routes>
+            <Route path="/" element={<SharedLayout />}>
+              <Route
+                index
+                element={
+                  <PublicRoute restricted>
+                    <MobileRoute redirectTo="login">
+                      <Login />
+                    </MobileRoute>
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="registration"
+                element={
+                  <PublicRoute restricted>
+                    <Register />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="login"
+                element={
+                  <PublicRoute restricted>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="google-redirect"
+                element={
+                  <PublicRoute restricted>
+                    <GoogleRedirect />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="library"
+                element={
+                  <PrivateRoute>
+                    <Library />
+                  </PrivateRoute>
+                }
+              >
+                <Route
+                  path="addBook"
+                  element={
+                    <PrivateRoute>
+                      <AddBook />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path=":id"
+                  element={
+                    <PrivateRoute>
+                      <BookDrawer />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path=":id/change"
+                  element={
+                    <PrivateRoute>
+                      <BookModal />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path=":id/rating"
+                  element={
+                    <PrivateRoute>
+                      <RatingModal />
+                    </PrivateRoute>
+                  }
+                />
+              </Route>
 
-        <Routes>
-          <Route path="/" element={<SharedLayout />}>
-            <Route
-              index
-              element={
-                <PublicRoute restricted>
-                  <MobileRoute redirectTo="login">
-                    <AboutApp />
-                  </MobileRoute>
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="register"
-              element={
-                <PublicRoute restricted>
-                  <Register />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="login"
-              element={
-                <PublicRoute restricted>
-                  <Login />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="google-redirect"
-              element={
-                <PublicRoute restricted>
-                  <GoogleRedirect />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="library"
-              element={
-                <PrivateRoute>
-                  <Library />
-                </PrivateRoute>
-              }
-            >
               <Route
-                path="addBook"
+                path="goals"
                 element={
                   <PrivateRoute>
-                    <AddBook />
+                    <GoalsList />
                   </PrivateRoute>
                 }
               />
               <Route
-                path=":id"
+                path="goals/addGoal"
                 element={
                   <PrivateRoute>
-                    <BookDrawer />
+                    <AddGoal />
                   </PrivateRoute>
                 }
               />
               <Route
-                path=":id/change"
+                path="goals/:id"
                 element={
                   <PrivateRoute>
-                    <BookModal />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path=":id/rating"
-                element={
-                  <PrivateRoute>
-                    <RatingModal />
+                    <Goal />
                   </PrivateRoute>
                 }
               />
             </Route>
-
-            <Route
-              path="goals"
-              element={
-                <PrivateRoute>
-                  <GoalsList />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="goals/addGoal"
-              element={
-                <PrivateRoute>
-                  <AddGoal />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="goals/:id"
-              element={
-                <PrivateRoute>
-                  <Goal />
-                </PrivateRoute>
-              }
-            />
-          </Route>
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        </AppStyled>
       </>
     )
   );
